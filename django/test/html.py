@@ -16,6 +16,33 @@ WHITESPACE = re.compile(r'\s+')
 def normalize_whitespace(string):
     return WHITESPACE.sub(' ', string)
 
+# Python 2
+from urlparse import urlparse, parse_qsl
+from urllib import unquote_plus
+# Python 3
+# from urllib.parse import urlparse, parse_qsl, unquote_plus
+
+# NOTE: From: https://stackoverflow.com/questions/5371992/comparing-two-urls-in-python
+class Url(object):
+    '''A url object that can be compared with other url orbjects
+    without regard to the vagaries of encoding, escaping, and ordering
+    of parameters in query strings.'''
+
+    def __init__(self, url):
+        parts = urlparse(url)
+        _query = frozenset(parse_qsl(parts.query))
+        _path = unquote_plus(parts.path)
+        parts = parts._replace(query=_query, path=_path)
+        self.parts = parts
+
+    def __eq__(self, other):
+        return self.parts == other.parts
+
+    def __ne__(self, other):
+        return not self == other # NOT `return not self.__eq__(other)`
+
+    def __hash__(self):
+        return hash(self.parts)
 
 @python_2_unicode_compatible
 class Element(object):
@@ -78,6 +105,17 @@ class Element(object):
                     value = attr
                 if other_value is None:
                     other_value = other_attr
+
+                # NOTE: If this is a href attribute, we need to compare it as a URL
+                # because query parameters don't need to be in a defined order
+                if attr == 'href':
+                    if value is not None:
+                        value = Url(value)
+
+                if other_attr == 'href':
+                    if other_value is not None:
+                        other_value = Url(other_value)
+
                 if attr != other_attr or value != other_value:
                     return False
         if self.children != element.children:
