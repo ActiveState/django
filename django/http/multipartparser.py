@@ -258,6 +258,8 @@ class MultiPartParser(object):
                                 remaining = len(stripped_chunk) % 4
                                 while remaining != 0:
                                     over_chunk = field_stream.read(4 - remaining)
+                                    if not over_chunk:
+                                        break
                                     stripped_chunk += b"".join(over_chunk.split())
                                     remaining = len(stripped_chunk) % 4
 
