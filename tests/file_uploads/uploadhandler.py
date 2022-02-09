@@ -1,7 +1,9 @@
 """
 Upload handlers to test the upload API.
 """
+# from importlib.abc import Traversable
 import os
+from tempfile import NamedTemporaryFile
 
 from django.core.files.uploadhandler import FileUploadHandler, StopUpload
 from django.core.files.temp import NamedTemporaryFile

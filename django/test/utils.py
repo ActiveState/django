@@ -891,3 +891,223 @@ def tag(*tags):
         setattr(obj, 'tags', set(tags))
         return obj
     return decorator
+
+
+import os as _os
+import weakref as _weakref
+import shutil as _shutil
+import warnings as _warnings
+from tempfile import gettempdir
+from random import Random as _Random
+from itertools import islice
+import sys as _sys
+
+import threading
+_allocate_lock = threading.Lock
+_once_lock = _allocate_lock()
+
+TMP_MAX=50
+
+# This variable _was_ unused for legacy reasons, see issue 10354.
+# But as of 3.5 we actually use it at runtime so changing it would
+# have a possibly desirable side effect...  But we do not want to support
+# that as an API.  It is undocumented on purpose.  Do not depend on this.
+template = "tmp"
+
+def _infer_return_type(*args):
+    """Look at the type of all args and divine their implied return type."""
+    return_type = None
+    for arg in args:
+        if arg is None:
+            continue
+        if isinstance(arg, bytes):
+            if return_type is str:
+                raise TypeError("Can't mix bytes and non-bytes in "
+                                "path components.")
+            return_type = bytes
+        else:
+            if return_type is bytes:
+                raise TypeError("Can't mix bytes and non-bytes in "
+                                "path components.")
+            return_type = str
+    if return_type is None:
+        return str  # tempfile APIs return a str by default.
+    return return_type
+
+
+def fsencode(value):
+    return str(value).encode(sys.getfilesystemencoding())
+
+
+def gettempdirb():
+    """A bytes version of tempfile.gettempdir()."""
+    return fsencode(gettempdir())
+
+
+def _sanitize_params(prefix, suffix, dir):
+    """Common parameter processing for most APIs in this module."""
+    output_type = _infer_return_type(prefix, suffix, dir)
+    if suffix is None:
+        suffix = output_type()
+    if prefix is None:
+        if output_type is str:
+            prefix = template
+        else:
+            prefix = fsencode(template)
+    if dir is None:
+        if output_type is str:
+            dir = gettempdir()
+        else:
+            dir = gettempdirb()
+    return prefix, suffix, dir, output_type
+
+
+class _RandomNameSequence:
+    """An instance of _RandomNameSequence generates an endless
+    sequence of unpredictable strings which can safely be incorporated
+    into file names.  Each string is eight characters long.  Multiple
+    threads can safely use the same instance at the same time.
+
+    _RandomNameSequence is an iterator."""
+
+    characters = "abcdefghijklmnopqrstuvwxyz0123456789_"
+
+    @property
+    def rng(self):
+        cur_pid = _os.getpid()
+        if cur_pid != getattr(self, '_rng_pid', None):
+            self._rng = _Random()
+            self._rng_pid = cur_pid
+        return self._rng
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        c = self.characters
+        choose = self.rng.choice
+        letters = [choose(c) for dummy in range(8)]
+        return ''.join(letters)
+
+    __next__ = next
+
+
+_name_sequence = None
+def _get_candidate_names():
+    """Common setup sequence for all user-callable interfaces."""
+
+    global _name_sequence
+    if _name_sequence is None:
+        _once_lock.acquire()
+        try:
+            if _name_sequence is None:
+                _name_sequence = _RandomNameSequence()
+        finally:
+            _once_lock.release()
+    return _name_sequence
+
+
+def mkdtemp(suffix=None, prefix=None, dir=None):
+    """User-callable function to create and return a unique temporary
+    directory.  The return value is the pathname of the directory.
+
+    Arguments are as for mkstemp, except that the 'text' argument is
+    not accepted.
+
+    The directory is readable, writable, and searchable only by the
+    creating user.
+
+    Caller is responsible for deleting the directory when done with it.
+    """
+
+    prefix, suffix, dir, output_type = _sanitize_params(prefix, suffix, dir)
+
+    names = _get_candidate_names()
+    if output_type is bytes:
+        names = map(fsencode, islice(names,50))
+
+    names = islice(names,TMP_MAX)
+    for seq in range(TMP_MAX):
+        name = next(names)
+        file = _os.path.join(dir, prefix + name + suffix)
+        try:
+            _os.mkdir(file, 0o700)
+        except FileExistsError:
+            continue    # try again
+        except PermissionError:
+            # This exception is thrown when a directory with the chosen name
+            # already exists on windows.
+            if (_os.name == 'nt' and _os.path.isdir(dir) and
+                _os.access(dir, _os.W_OK)):
+                continue
+            else:
+                raise
+        return file
+
+    raise FileExistsError(_errno.EEXIST,
+                          "No usable temporary directory name found")
+
+
+class TemporaryDirectory(object):
+    """Create and return a temporary directory.  This has the same
+    behavior as mkdtemp but can be used as a context manager.  For
+    example:
+
+        with TemporaryDirectory() as tmpdir:
+            ...
+
+    Upon exiting the context, the directory and everything contained
+    in it are removed.
+    """
+
+    def __init__(self, suffix=None, prefix=None, dir=None):
+        self.name = mkdtemp(suffix, prefix, dir)
+
+    @classmethod
+    def _rmtree(cls, name):
+        def onerror(func, path, exc_info):
+            if issubclass(exc_info[0], PermissionError):
+                def resetperms(path):
+                    try:
+                        _os.chflags(path, 0)
+                    except AttributeError:
+                        pass
+                    _os.chmod(path, 0o700)
+
+                try:
+                    if path != name:
+                        resetperms(_os.path.dirname(path))
+                    resetperms(path)
+
+                    try:
+                        _os.unlink(path)
+                    # PermissionError is raised on FreeBSD for directories
+                    except (IsADirectoryError, PermissionError):
+                        cls._rmtree(path)
+                except FileNotFoundError:
+                    pass
+            elif issubclass(exc_info[0], FileNotFoundError):
+                pass
+            else:
+                raise
+
+        _shutil.rmtree(name, onerror=onerror)
+
+    @classmethod
+    def _cleanup(cls, name, warn_message):
+        cls._rmtree(name)
+        _warnings.warn(warn_message, ResourceWarning)
+
+    def __repr__(self):
+        return "<{} {!r}>".format(self.__class__.__name__, self.name)
+
+    def __enter__(self):
+        return self.name
+
+    def __exit__(self, exc, value, tb):
+        self.cleanup()
+
+    def cleanup(self):
+        # if self._finalizer.detach():
+        #     self._rmtree(self.name)
+        self._rmtree(self.name)
