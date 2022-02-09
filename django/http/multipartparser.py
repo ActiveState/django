@@ -221,7 +221,7 @@ class MultiPartParser(object):
                     file_name = disposition.get('filename')
                     if file_name:
                         file_name = force_text(file_name, encoding, errors='replace')
-                        file_name = self.IE_sanitize(unescape_entities(file_name))
+                        file_name = self.sanitize_file_name(file_name)
                     if not file_name:
                         continue
 
@@ -326,10 +326,13 @@ class MultiPartParser(object):
         So while this function does sanitize filenames to some extent, the
         resulting filename should still be considered as untrusted user input.
         """
-        # NOTE Trying to backport to Python 2.7
+        # NOTE: Trying to backport to Python 2.7
         # file_name = html.unescape(file_name)
         file_name = HTMLParser.HTMLParser().unescape(file_name)
-        # NOTE Trying to backport to Python 2.7
+        # Now handle some HTML entities that Python2 doesn't handle
+        file_name = file_name.replace("&sol;","/").replace("&bsol;","\\")
+        # Now handle some HTML entities that Python2 doesn't handle
+        # NOTE: Trying to backport to Python 2.7
 
         file_name = file_name.rsplit('/')[-1]
         file_name = file_name.rsplit('\\')[-1]
