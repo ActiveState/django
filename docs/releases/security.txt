@@ -1069,3 +1069,86 @@ Versions affected
 * Django 3.0 :commit:`(patch) <26a5cf834526e291db00385dd33d319b8271fc4c>`
 * Django 2.2 :commit:`(patch) <fe886a3b58a93cfbe8864b485f93cb6d426cd1f2>`
 * Django 1.11 :commit:`(patch) <02d97f3c9a88adc890047996e5606180bd1c6166>`
+
+
+February 22, 2022 Relase 1.11.29.1
+-----------------------------------
+
+CVE-2020-13596: Possible XSS via admin ``ForeignKeyRawIdWidget``
+================================================================
+
+Query parameters for the admin ``ForeignKeyRawIdWidget`` were not properly URL
+encoded, posing an XSS attack vector. ``ForeignKeyRawIdWidget`` now
+ensures query parameters are correctly URL encoded.
+
+Versions affected
+~~~~~~~~~~~~~~~~~
+
+* Django 1.11 :commit:`(patch) <e30f69089719d3e70293f8447e3792c551e35503>`
+
+
+CVE-2021-31542: Potential directory-traversal via uploaded files
+================================================================
+
+``MultiPartParser``, ``UploadedFile``, and ``FieldFile`` allowed
+directory-traversal via uploaded files with suitably crafted file names.
+
+In order to mitigate this risk, stricter basename and path sanitation is now
+applied. Specifically, empty file names and paths with dot segments will be
+rejected.
+
+Versions affected
+~~~~~~~~~~~~~~~~~
+
+* Django 1.11 :commit:`(patch) <615ce0284e445900331c30f793310b832bc07787>`
+
+CVE-2021-33203: Potential directory traversal via ``admindocs``
+===============================================================
+
+Staff members could use the :mod:`~django.contrib.admindocs`
+``TemplateDetailView`` view to check the existence of arbitrary files.
+Additionally, if (and only if) the default admindocs templates have been
+customized by the developers to also expose the file contents, then not only
+the existence but also the file contents would have been exposed.
+
+As a mitigation, path sanitation is now applied and only files within the
+template root directories can be loaded.
+
+Versions affected
+~~~~~~~~~~~~~~~~~
+
+* Django 1.11 :commit:`(patch) <5380b5165940130a04263b5979930b18a7894a60>`
+
+* April 6, 2021 *
+
+CVE-2021-28658: Potential directory-traversal via uploaded files
+================================================================
+
+``MultiPartParser`` allowed directory-traversal via uploaded files with
+suitably crafted file names.
+
+Built-in upload handlers were not affected by this vulnerability.
+
+Versions affected
+~~~~~~~~~~~~~~~~~
+
+* Django 1.11 :commit:`(patch) <48a7f6e4c5bea64df328aee8a9c90d7b92458fc7>`
+
+*February 1, 2021*
+
+Django 1.11.29.1 fixes a security issue with severity "high" in 1.11.29.
+
+CVE-2021-3281: Potential directory-traversal via ``archive.extract()``
+======================================================================
+
+The ``django.utils.archive.extract()`` function, used by
+:option:`startapp --template` and :option:`startproject --template`, allowed
+directory-traversal via an archive with absolute paths or relative paths with
+dot segments.
+
+
+Versions affected
+~~~~~~~~~~~~~~~~~
+
+* Django 1.11 :commit:`(patch) <22f146f86d6fa361d26e3af1a316d0767fdf64ab>`
+
