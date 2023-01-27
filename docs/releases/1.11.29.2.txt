@@ -1,0 +1,15 @@
+============================
+Django 1.11.29.2 release notes
+============================
+
+*January 27, 2023*
+
+Django 1.11.29.2 compatibility fix
+
+Skip non-ASCII test on Windows
+================================================================
+
+The non-ASCII test uses a unicode filename, and causes standard
+windows file operations to fail.  Therefore the file is renamed
+to x.txt, and renamed to unicode on a non-windows system at
+test time.
