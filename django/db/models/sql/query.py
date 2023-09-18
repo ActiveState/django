@@ -8,7 +8,9 @@ all about the internals of models in order to get the information it needs.
 """
 import copy
 import warnings
-from collections import Counter, Iterator, Mapping, OrderedDict
+import re
+from collections import Counter, OrderedDict
+from collections.abc import Iterator, Mapping
 from itertools import chain, count, product
 from string import ascii_uppercase
 
@@ -37,6 +39,10 @@ from django.utils.encoding import force_text
 from django.utils.tree import Node
 
 __all__ = ['Query', 'RawQuery']
+
+# Quotation marks ('"`[]), whitespace characters, semicolons, or inline
+# SQL comments are forbidden in column aliases.
+FORBIDDEN_ALIAS_PATTERN = re.compile(r"['`\"\]\[;\s]|--|/\*|\*/")
 
 
 def get_field_names_from_opts(opts):
@@ -965,10 +971,16 @@ class Query(object):
             alias = seen[int_model] = joins[-1]
         return alias or seen[None]
 
+    def check_alias(self, alias):
+        if FORBIDDEN_ALIAS_PATTERN.search(alias):
+            raise ValueError(
+                "Column aliases cannot contain whitespace characters, quotation marks, "
+                "semicolons, or SQL comments."
+            )
+
     def add_annotation(self, annotation, alias, is_summary=False):
-        """
-        Adds a single annotation expression to the Query
-        """
+        """Add a single annotation expression to the Query."""
+        self.check_alias(alias)
         annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None,
                                                    summarize=is_summary)
         self.append_annotation_mask([alias])
@@ -1744,7 +1756,8 @@ class Query(object):
             else:
                 param_iter = iter([])
             for name, entry in select.items():
-                entry = force_text(entry)
+                self.check_alias(name)
+                entry = str(entry)
                 entry_params = []
                 pos = entry.find("%s")
                 while pos != -1:
