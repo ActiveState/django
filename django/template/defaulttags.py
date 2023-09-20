@@ -9,6 +9,8 @@ from datetime import datetime
 from itertools import cycle as itertools_cycle, groupby
 
 from django.conf import settings
+from django.utils import timezone
+from django.utils.html import conditional_escape, escape, format_html
 from django.utils import six, timezone
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
@@ -97,10 +99,13 @@ class CycleNode(Node):
 
 class DebugNode(Node):
     def render(self, context):
+        if not settings.DEBUG:
+            return ''
+
         from pprint import pformat
-        output = [force_text(pformat(val)) for val in context]
+        output = [escape(pformat(val)) for val in context]
         output.append('\n\n')
-        output.append(force_text(pformat(sys.modules)))
+        output.append(escape(pformat(sys.modules)))
         return ''.join(output)
 
 
