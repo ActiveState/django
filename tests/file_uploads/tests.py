@@ -155,6 +155,26 @@ class FileUploadTests(TestCase):
             # encodestring is a deprecated alias on Python 3
             "Big data" * 68000, encode=base64.encodestring if PY2 else base64.encodebytes)
 
+    def test_base64_invalid_upload(self):
+        payload = client.FakePayload('\r\n'.join([
+            '--' + client.BOUNDARY,
+            'Content-Disposition: form-data; name="file"; filename="test.txt"',
+            'Content-Type: application/octet-stream',
+            'Content-Transfer-Encoding: base64',
+            ''
+        ]))
+        payload.write(b'\r\n!\r\n')
+        payload.write('--' + client.BOUNDARY + '--\r\n')
+        r = {
+            'CONTENT_LENGTH': len(payload),
+            'CONTENT_TYPE': client.MULTIPART_CONTENT,
+            'PATH_INFO': '/echo_content/',
+            'REQUEST_METHOD': 'POST',
+            'wsgi.input': payload,
+        }
+        response = self.client.request(**r)
+        self.assertEqual(response.json()['file'], '')
+
     def test_unicode_file_name(self):
         tdir = sys_tempfile.mkdtemp()
         self.addCleanup(shutil.rmtree, tdir, True)
