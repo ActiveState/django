@@ -10,7 +10,6 @@ import base64
 import binascii
 import cgi
 import sys
-import HTMLParser
 
 from django.conf import settings
 from django.core.exceptions import (
@@ -22,6 +21,7 @@ from django.core.files.uploadhandler import (
 from django.utils import six
 from django.utils.datastructures import MultiValueDict
 from django.utils.encoding import force_text
+from six.moves.html_parser import HTMLParser
 from django.utils.six.moves.urllib.parse import unquote
 from django.utils.text import unescape_entities
 
@@ -44,16 +44,6 @@ FILE = "file"
 FIELD = "field"
 
 _BASE64_DECODE_ERROR = TypeError if six.PY2 else binascii.Error
-
-import htmllib
-
-def unescape_custom(s):
-    ents = htmllib.constants.entities
-    for e in ents:
-        if e[-1] != ';':
-            e += ';'
-        s = s.replace('&{}'.format(e), ents[e])
-    return s
 
 class MultiPartParser(object):
     """
