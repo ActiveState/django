@@ -247,8 +247,9 @@ def get_valid_filename(name):
     'johns_portrait_in_2004.jpg'
     """
     # Whatever this is (and it may easily not be a str), make sure it ends up as a unicode type
-    if not isinstance(name,unicode):
-        name = name.decode("utf-8","replace")
+    if six.PY2:
+        if not isinstance(name, unicode):
+            name = name.decode("utf-8", "replace")
 
     s = name.strip().replace(' ', '_')
     s = re.sub(r'(?u)[^-\w.]', '', s)

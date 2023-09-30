@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 import base64
 import binascii
 import cgi
+import os
+import re
 import sys
 
 from django.conf import settings
@@ -21,7 +23,6 @@ from django.core.files.uploadhandler import (
 from django.utils import six
 from django.utils.datastructures import MultiValueDict
 from django.utils.encoding import force_text
-from six.moves.html_parser import HTMLParser
 from django.utils.six.moves.urllib.parse import unquote
 from django.utils.text import unescape_entities
 
@@ -318,20 +319,26 @@ class MultiPartParser(object):
         So while this function does sanitize filenames to some extent, the
         resulting filename should still be considered as untrusted user input.
         """
-        # NOTE: Trying to backport to Python 2.7
-        # file_name = html.unescape(file_name)
-        file_name = HTMLParser.HTMLParser().unescape(file_name)
-        # Now handle some HTML entities that Python2 doesn't handle
-        file_name = file_name.replace("&sol;","/").replace("&bsol;","\\")
-        # Now handle some HTML entities that Python2 doesn't handle
-        # NOTE: Trying to backport to Python 2.7
+        # # NOTE: Trying to backport to Python 2.7
+        # # file_name = html.unescape(file_name)
+        # file_name = HTMLParser.unescape(file_name)
+        # # Now handle some HTML entities that Python2 doesn't handle
+        # file_name = file_name.replace("&sol;","/").replace("&bsol;","\\")
+        # # Now handle some HTML entities that Python2 doesn't handle
+        # # NOTE: Trying to backport to Python 2.7
+
+        file_name = unescape_entities(file_name)
+        # # Now handle some HTML entities that Python2 doesn't handle
+        file_name = re.sub("&sol;","/",file_name)
+        file_name = re.sub("&bsol;","\\\\",file_name)
 
         file_name = file_name.rsplit('/')[-1]
         file_name = file_name.rsplit('\\')[-1]
 
         if file_name in {'', '.', '..'}:
             return None
-        return file_name
+
+        return os.path.basename(file_name)
 
     IE_sanitize = sanitize_file_name
 

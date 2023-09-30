@@ -107,6 +107,14 @@ def get_installed():
 
 
 def setup(verbosity, test_labels, parallel):
+    # +++ ActiveState Fixups for Unicode on Windows
+    if os.name != 'nt':
+        filepathfrom = os.path.join(RUNTESTS_DIR,"staticfiles_tests", "apps", "test" ,"static", "test", "x.txt")
+        filepathto = os.path.join(RUNTESTS_DIR, "staticfiles_tests",  "apps", "test", "static", "test", "⊗.txt")
+        if os.path.isfile(filepathfrom):
+            os.rename(filepathfrom, filepathto)
+    # +++ ActiveState Fixups for Unicode on Windows
+
     # Reduce the given test labels to just the app module path.
     test_labels_set = set()
     for label in test_labels:
@@ -249,6 +257,13 @@ def teardown(state):
     from multiprocessing.util import _finalizer_registry
     _finalizer_registry.pop((-100, 0), None)
 
+    # +++ ActiveState Fixups for Unicode on Windows
+    if os.name != 'nt':
+        filepathfrom = os.path.join(RUNTESTS_DIR,"staticfiles_tests", "apps", "test" ,"static", "test", "x.txt")
+        filepathto = os.path.join(RUNTESTS_DIR, "staticfiles_tests",  "apps", "test", "static", "test", "⊗.txt")
+        if os.path.isfile(filepathto):
+            os.rename(filepathto, filepathfrom)
+    # +++ ActiveState Fixups for Unicode on Windows
 
 def actual_test_processes(parallel):
     if parallel == 0:
