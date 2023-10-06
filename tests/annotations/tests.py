@@ -9,6 +9,7 @@ from django.db.models import (
     IntegerField, NullBooleanField, Q, Sum, Value,
 )
 from django.db.models.functions import Length, Lower
+from django.db.models import OuterRef, Subquery
 from django.test import TestCase, skipUnlessDBFeature
 from django.utils import six
 
