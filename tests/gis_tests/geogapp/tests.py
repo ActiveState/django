@@ -4,7 +4,7 @@ Tests for geography support in PostGIS
 from __future__ import unicode_literals
 
 import os
-from unittest import skipIf, skipUnless
+from unittest2 import skipIf, skipUnless
 
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Area, Distance

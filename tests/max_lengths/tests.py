@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from .models import PersonWithCustomMaxLengths, PersonWithDefaultMaxLengths
 
 
-class MaxLengthArgumentsTests(unittest.TestCase):
+class MaxLengthArgumentsTests(unittest2.TestCase):
 
     def verify_max_length(self, model, field, length):
         self.assertEqual(model._meta.get_field(field).max_length, length)
@@ -23,7 +23,7 @@ class MaxLengthArgumentsTests(unittest.TestCase):
         self.verify_max_length(PersonWithCustomMaxLengths, 'avatar', 250)
 
 
-class MaxLengthORMTests(unittest.TestCase):
+class MaxLengthORMTests(unittest2.TestCase):
 
     def test_custom_max_lengths(self):
         args = {

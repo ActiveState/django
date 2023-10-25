@@ -1,7 +1,7 @@
 # Unit tests for typecast functions in django.db.backends.util
 
 import datetime
-import unittest
+import unittest2
 
 from django.db.backends import utils as typecasts
 from django.utils import six
@@ -51,7 +51,7 @@ TEST_CASES = {
 }
 
 
-class DBTypeCasts(unittest.TestCase):
+class DBTypeCasts(unittest2.TestCase):
     def test_typeCasts(self):
         for k, v in six.iteritems(TEST_CASES):
             for inpt, expected in v:

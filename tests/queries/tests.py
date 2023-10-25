@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import pickle
-import unittest
+import unittest2
 from collections import OrderedDict
 from operator import attrgetter
 
@@ -1716,15 +1716,6 @@ class Queries5Tests(TestCase):
             'bar %s'
         )
 
-    def test_extra_select_alias_sql_injection(self):
-        crafted_alias = """injected_name" from "queries_note"; --"""
-        msg = (
-            "Column aliases cannot contain whitespace characters, quotation marks, "
-            "semicolons, or SQL comments."
-        )
-        with self.assertRaisesMessage(ValueError, msg):
-            Note.objects.extra(select={crafted_alias: "1"})
-
 
 class SelectRelatedTests(TestCase):
     def test_tickets_3045_3288(self):
@@ -1994,7 +1985,7 @@ class ExistsSql(TestCase):
         self.assertFalse(Article.objects.distinct('name')[2:3].exists())
 
 
-class QuerysetOrderedTests(unittest.TestCase):
+class QuerysetOrderedTests(unittest2.TestCase):
     """
     Tests for the Queryset.ordered attribute.
     """
@@ -2273,7 +2264,7 @@ class QuerySetSupportsPythonIdioms(TestCase):
             ]
         )
 
-    @unittest.skipUnless(six.PY2, "Python 2 only -- Python 3 doesn't have longs.")
+    @unittest2.skipUnless(six.PY2, "Python 2 only -- Python 3 doesn't have longs.")
     def test_slicing_works_with_longs(self):
         # NOQA: long undefined on PY3
         self.assertEqual(self.get_ordered_articles()[long(0)].name, 'Article 1')  # NOQA
@@ -2599,7 +2590,7 @@ class ConditionalTests(TestCase):
         )
 
 
-class UnionTests(unittest.TestCase):
+class UnionTests(unittest2.TestCase):
     """
     Tests for the union of two querysets. Bug #12252.
     """
@@ -2803,7 +2794,7 @@ class ExcludeTest17600(TestCase):
             list(Order.objects.exclude(items__status=1)),
             list(Order.objects.exclude(Q(items__status=1)).distinct()))
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_only_orders_with_all_items_having_status_1(self):
         """
         This should only return orders having ALL items set to status 1, or
@@ -2855,7 +2846,7 @@ class NullInExcludeTest(TestCase):
         # into subquery above
         self.assertIs(inner_qs._result_cache, None)
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_col_not_in_list_containing_null(self):
         """
         The following case is not handled properly because

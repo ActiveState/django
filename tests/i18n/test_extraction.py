@@ -7,7 +7,7 @@ import re
 import shutil
 import time
 import warnings
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from admin_scripts.tests import AdminScriptTestCase
 

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from datetime import datetime, timedelta
 from decimal import Decimal
-from unittest import skipIf, skipUnless
+from unittest2 import skipIf, skipUnless
 
 from django.db import connection
 from django.db.models import CharField, TextField, Value as V

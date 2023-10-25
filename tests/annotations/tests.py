@@ -25,7 +25,7 @@ def cxOracle_py3_bug(func):
     rather than unicode). This makes some tests here fail under Python 3, so
     we mark them as expected failures until someone fixes them in #23843.
     """
-    from unittest import expectedFailure
+    from unittest2 import expectedFailure
     from django.db import connection
     return expectedFailure(func) if connection.vendor == 'oracle' and six.PY3 else func
 

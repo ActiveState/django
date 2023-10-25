@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import mimetypes
-import unittest
+import unittest2
 from os import path
 
 from django.conf.urls.static import static
@@ -141,7 +141,7 @@ class StaticHelperTest(StaticTests):
         urls.urlpatterns = self._old_views_urlpatterns
 
 
-class StaticUtilsTests(unittest.TestCase):
+class StaticUtilsTests(unittest2.TestCase):
     def test_was_modified_since_fp(self):
         """
         A floating point mtime does not disturb was_modified_since (#18675).

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import os
 from datetime import date
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.apps import apps
 from django.conf import settings

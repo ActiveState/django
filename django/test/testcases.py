@@ -5,13 +5,13 @@ import json
 import posixpath
 import sys
 import threading
-import unittest
+import unittest2
 import warnings
 from collections import Counter
 from contextlib import contextmanager
 from copy import copy
 from functools import wraps
-from unittest.util import safe_repr
+from unittest2.util import safe_repr
 
 from django.apps import apps
 from django.conf import settings
@@ -151,7 +151,7 @@ class _CursorFailure(object):
         )
 
 
-class SimpleTestCase(unittest.TestCase,BackPortedTestCaseMixin):
+class SimpleTestCase(unittest2.TestCase,BackPortedTestCaseMixin):
 
     # The class we'll use for the test client self.client.
     # Can be overridden in derived classes.
@@ -806,10 +806,10 @@ class SimpleTestCase(unittest.TestCase,BackPortedTestCaseMixin):
                 self.fail(self._formatMessage(msg, standardMsg))
 
     if six.PY2:
-        assertCountEqual = unittest.TestCase.assertItemsEqual
-        assertNotRegex = unittest.TestCase.assertNotRegexpMatches
-        assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
-        assertRegex = unittest.TestCase.assertRegexpMatches
+        assertCountEqual = unittest2.TestCase.assertItemsEqual
+        assertNotRegex = unittest2.TestCase.assertNotRegexpMatches
+        assertRaisesRegex = unittest2.TestCase.assertRaisesRegexp
+        assertRegex = unittest2.TestCase.assertRegexpMatches
 
 
 class TransactionTestCase(SimpleTestCase):
@@ -1114,11 +1114,11 @@ class CheckCondition(object):
 def _deferredSkip(condition, reason):
     def decorator(test_func):
         if not (isinstance(test_func, type) and
-                issubclass(test_func, unittest.TestCase)):
+                issubclass(test_func, unittest2.TestCase)):
             @wraps(test_func)
             def skip_wrapper(*args, **kwargs):
                 if condition():
-                    raise unittest.SkipTest(reason)
+                    raise unittest2.SkipTest(reason)
                 return test_func(*args, **kwargs)
             test_item = skip_wrapper
         else:

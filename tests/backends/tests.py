@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import datetime
 import re
 import threading
-import unittest
+import unittest2
 import warnings
 from decimal import Decimal, Rounded
 
@@ -74,8 +74,8 @@ class DummyBackendTest(SimpleTestCase):
             conns[DEFAULT_DB_ALIAS].ensure_connection()
 
 
-@unittest.skipUnless(connection.vendor == 'oracle', "Test only for Oracle")
-class OracleTests(unittest.TestCase):
+@unittest2.skipUnless(connection.vendor == 'oracle', "Test only for Oracle")
+class OracleTests(unittest2.TestCase):
 
     def test_quote_name(self):
         # '%' chars are escaped for query execution.
@@ -145,7 +145,7 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(trigger_name, 'SCHEMA_AUTHORWITHEVENLOB0B8_TR')
 
 
-@unittest.skipUnless(connection.vendor == 'sqlite', "Test only for SQLite")
+@unittest2.skipUnless(connection.vendor == 'sqlite', "Test only for SQLite")
 class SQLiteTests(TestCase):
 
     longMessage = True
@@ -207,7 +207,7 @@ class SQLiteTests(TestCase):
                 creation._get_test_db_name()
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "Test only for PostgreSQL")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "Test only for PostgreSQL")
 class PostgreSQLTests(TestCase):
 
     def assert_parses(self, version_string, version):
@@ -448,7 +448,7 @@ class LastExecutedQueryTest(TestCase):
         last_sql = cursor.db.ops.last_executed_query(cursor, sql, params)
         self.assertIsInstance(last_sql, six.text_type)
 
-    @unittest.skipUnless(connection.vendor == 'sqlite',
+    @unittest2.skipUnless(connection.vendor == 'sqlite',
                          "This test is specific to SQLite.")
     def test_no_interpolation_on_sqlite(self):
         # This shouldn't raise an exception (##17158)
@@ -456,7 +456,7 @@ class LastExecutedQueryTest(TestCase):
         connection.cursor().execute(query)
         self.assertEqual(connection.queries[-1]['sql'], query)
 
-    @unittest.skipUnless(connection.vendor == 'sqlite',
+    @unittest2.skipUnless(connection.vendor == 'sqlite',
                          "This test is specific to SQLite.")
     def test_parameter_quoting_on_sqlite(self):
         # The implementation of last_executed_queries isn't optimal. It's
@@ -468,7 +468,7 @@ class LastExecutedQueryTest(TestCase):
         substituted = "SELECT '\"''\\'"
         self.assertEqual(connection.queries[-1]['sql'], substituted)
 
-    @unittest.skipUnless(connection.vendor == 'sqlite',
+    @unittest2.skipUnless(connection.vendor == 'sqlite',
                          "This test is specific to SQLite.")
     def test_large_number_of_parameters_on_sqlite(self):
         # If SQLITE_MAX_VARIABLE_NUMBER (default = 999) has been changed to be
@@ -608,7 +608,7 @@ class EscapingChecks(TestCase):
         cursor.execute("SELECT '%%', %s" + self.bare_select_suffix, ('%d',))
         self.assertEqual(cursor.fetchall()[0], ('%', '%d'))
 
-    @unittest.skipUnless(connection.vendor == 'sqlite',
+    @unittest2.skipUnless(connection.vendor == 'sqlite',
                          "This is an sqlite-specific issue")
     def test_sqlite_parameter_escaping(self):
         # '%s' escaping support for sqlite3 #13648
@@ -798,7 +798,7 @@ class BackendTestCase(TransactionTestCase):
             # cursor should be closed, so no queries should be possible.
             cursor.execute("SELECT 1" + connection.features.bare_select_suffix)
 
-    @unittest.skipUnless(connection.vendor == 'postgresql',
+    @unittest2.skipUnless(connection.vendor == 'postgresql',
                          "Psycopg2 specific cursor.closed attribute needed")
     def test_cursor_contextmanager_closing(self):
         # There isn't a generic way to test that cursors are closed, but
@@ -1275,7 +1275,7 @@ class BackendUtilTests(SimpleTestCase):
                   '1234600000')
 
 
-@unittest.skipUnless(connection.vendor == 'sqlite', 'SQLite specific test.')
+@unittest2.skipUnless(connection.vendor == 'sqlite', 'SQLite specific test.')
 @skipUnlessDBFeature('can_share_in_memory_db')
 class TestSqliteThreadSharing(TransactionTestCase):
     available_apps = ['backends']

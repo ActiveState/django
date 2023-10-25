@@ -4,7 +4,7 @@ import os
 import shutil
 import sys
 import tempfile
-import unittest
+import unittest2
 
 from django.conf import settings
 from django.contrib.staticfiles import finders, storage
@@ -481,7 +481,7 @@ class CustomStaticFilesStorage(storage.StaticFilesStorage):
         super(CustomStaticFilesStorage, self).__init__(*args, **kwargs)
 
 
-@unittest.skipIf(sys.platform.startswith('win'), "Windows only partially supports chmod.")
+@unittest2.skipIf(sys.platform.startswith('win'), "Windows only partially supports chmod.")
 class TestStaticFilePermissions(CollectionTestCase):
 
     command_params = {

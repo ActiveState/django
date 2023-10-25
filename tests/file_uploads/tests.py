@@ -9,7 +9,7 @@ import os
 import shutil
 import sys
 import tempfile as sys_tempfile
-import unittest
+import unittest2
 from io import BytesIO
 
 from django.core.exceptions import SuspiciousFileOperation
@@ -602,7 +602,7 @@ class FileUploadTests(TestCase):
             from pathlib import Path
         except ImportError:
             from pathlib2 import Path
-        
+
         Path(UPLOAD_TO).mkdir(exist_ok=True, parents=True)
         self.addCleanup(shutil.rmtree, MEDIA_ROOT)
         tests = [
@@ -663,7 +663,7 @@ class DirectoryCreationTests(SimpleTestCase):
     def setUp(self):
         self.obj = FileModel()
 
-    @unittest.skipIf(sys.platform == 'win32', "Python on Windows doesn't have working os.chmod().")
+    @unittest2.skipIf(sys.platform == 'win32', "Python on Windows doesn't have working os.chmod().")
     def test_readonly_root(self):
         """Permission errors are not swallowed"""
         os.chmod(MEDIA_ROOT, 0o500)

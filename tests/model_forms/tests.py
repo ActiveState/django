@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import datetime
 import os
 from decimal import Decimal
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django import forms
 from django.core.exceptions import (

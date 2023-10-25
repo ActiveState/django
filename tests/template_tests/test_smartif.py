@@ -1,9 +1,9 @@
-import unittest
+import unittest2
 
 from django.template.smartif import IfParser
 
 
-class SmartIfTests(unittest.TestCase):
+class SmartIfTests(unittest2.TestCase):
 
     def assertCalcEqual(self, expected, tokens):
         self.assertEqual(expected, IfParser(tokens).parse().eval({}))

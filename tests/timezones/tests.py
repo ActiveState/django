@@ -5,7 +5,7 @@ import re
 import sys
 import warnings
 from contextlib import contextmanager
-from unittest import SkipTest, skipIf
+from unittest2 import SkipTest, skipIf
 from xml.dom.minidom import parseString
 
 import pytz

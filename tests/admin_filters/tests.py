@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import sys
-import unittest
+import unittest2
 
 from django.contrib.admin import (
     AllValuesFieldListFilter, BooleanFieldListFilter, ModelAdmin,
@@ -450,7 +450,7 @@ class ListFiltersTests(TestCase):
         self.assertIs(choice['selected'], True)
         self.assertEqual(choice['query_string'], '?date_registered__isnull=False')
 
-    @unittest.skipIf(
+    @unittest2.skipIf(
         sys.platform.startswith('win'),
         "Windows doesn't support setting a timezone that differs from the "
         "system timezone."

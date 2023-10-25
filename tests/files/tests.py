@@ -6,7 +6,7 @@ import gzip
 import os
 import struct
 import tempfile
-import unittest
+import unittest2
 from io import BytesIO, StringIO, TextIOWrapper
 
 from django.core.files import File
@@ -26,7 +26,7 @@ else:
     from django.core.files import images
 
 
-class FileTests(unittest.TestCase):
+class FileTests(unittest2.TestCase):
     def test_unicode_uploadedfile_name(self):
         uf = UploadedFile(name='¿Cómo?', content_type='text')
         self.assertIs(type(repr(uf)), str)
@@ -156,7 +156,7 @@ class FileTests(unittest.TestCase):
             self.assertEqual(test_file.read(), (content * 2).encode('utf-8'))
 
 
-class NoNameFileTestCase(unittest.TestCase):
+class NoNameFileTestCase(unittest2.TestCase):
     """
     Other examples of unnamed files may be tempfile.SpooledTemporaryFile or
     urllib.urlopen()
@@ -168,7 +168,7 @@ class NoNameFileTestCase(unittest.TestCase):
         self.assertEqual(File(BytesIO(b'A file with no name')).size, 19)
 
 
-class ContentFileTestCase(unittest.TestCase):
+class ContentFileTestCase(unittest2.TestCase):
     def test_content_file_default_name(self):
         self.assertIsNone(ContentFile(b"content").name)
 
@@ -191,11 +191,11 @@ class ContentFileTestCase(unittest.TestCase):
             self.assertIsInstance(ContentFile("español").read(), bytes)
 
 
-class DimensionClosingBug(unittest.TestCase):
+class DimensionClosingBug(unittest2.TestCase):
     """
     get_image_dimensions() properly closes files (#8817)
     """
-    @unittest.skipUnless(Image, "Pillow not installed")
+    @unittest2.skipUnless(Image, "Pillow not installed")
     def test_not_closing_of_files(self):
         """
         Open files passed into get_image_dimensions() should stay opened.
@@ -206,7 +206,7 @@ class DimensionClosingBug(unittest.TestCase):
         finally:
             self.assertTrue(not empty_io.closed)
 
-    @unittest.skipUnless(Image, "Pillow not installed")
+    @unittest2.skipUnless(Image, "Pillow not installed")
     def test_closing_of_filenames(self):
         """
         get_image_dimensions() called with a filename should closed the file.
@@ -241,12 +241,12 @@ class DimensionClosingBug(unittest.TestCase):
         self.assertTrue(FileWrapper._closed)
 
 
-class InconsistentGetImageDimensionsBug(unittest.TestCase):
+class InconsistentGetImageDimensionsBug(unittest2.TestCase):
     """
     get_image_dimensions() works properly after various calls
     using a file handler (#11158)
     """
-    @unittest.skipUnless(Image, "Pillow not installed")
+    @unittest2.skipUnless(Image, "Pillow not installed")
     def test_multiple_calls(self):
         """
         Multiple calls of get_image_dimensions() should return the same size.
@@ -260,7 +260,7 @@ class InconsistentGetImageDimensionsBug(unittest.TestCase):
         self.assertEqual(image_pil.size, size_1)
         self.assertEqual(size_1, size_2)
 
-    @unittest.skipUnless(Image, "Pillow not installed")
+    @unittest2.skipUnless(Image, "Pillow not installed")
     def test_bug_19457(self):
         """
         Regression test for #19457
@@ -272,8 +272,8 @@ class InconsistentGetImageDimensionsBug(unittest.TestCase):
             self.assertEqual(size, Image.open(fh).size)
 
 
-@unittest.skipUnless(Image, "Pillow not installed")
-class GetImageDimensionsTests(unittest.TestCase):
+@unittest2.skipUnless(Image, "Pillow not installed")
+class GetImageDimensionsTests(unittest2.TestCase):
 
     def test_invalid_image(self):
         """
@@ -303,7 +303,7 @@ class GetImageDimensionsTests(unittest.TestCase):
                 self.assertEqual(size, (None, None))
 
 
-class FileMoveSafeTests(unittest.TestCase):
+class FileMoveSafeTests(unittest2.TestCase):
     def test_file_move_overwrite(self):
         handle_a, self.file_a = tempfile.mkstemp()
         handle_b, self.file_b = tempfile.mkstemp()
@@ -344,7 +344,7 @@ class FileMoveSafeTests(unittest.TestCase):
             os.close(handle_b)
 
 
-class SpooledTempTests(unittest.TestCase):
+class SpooledTempTests(unittest2.TestCase):
     def test_in_memory_spooled_temp(self):
         with tempfile.SpooledTemporaryFile() as temp:
             temp.write(b"foo bar baz quux\n")

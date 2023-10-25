@@ -5,7 +5,7 @@ import gzip
 import random
 import re
 from io import BytesIO
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.conf import settings
 from django.core import mail

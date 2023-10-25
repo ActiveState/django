@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from unittest import skipIf, skipUnless
+from unittest2 import skipIf, skipUnless
 
 from django.contrib.gis.db.models.functions import (
     Area, Distance, Length, Perimeter, Transform,

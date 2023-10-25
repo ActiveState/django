@@ -1,7 +1,7 @@
 import os
 from argparse import ArgumentParser
 from contextlib import contextmanager
-from unittest import TestSuite, TextTestRunner, defaultTestLoader
+from unittest2 import TestSuite, TextTestRunner, defaultTestLoader
 
 from django.test import TestCase
 from django.test.runner import DiscoverRunner

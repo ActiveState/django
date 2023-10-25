@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.core.exceptions import ImproperlyConfigured
 from django.db import connection
@@ -8,7 +8,7 @@ from django.test import TestCase, override_settings
 
 
 @override_settings(DEBUG=True)
-@unittest.skipUnless(connection.vendor == 'mysql', 'MySQL specific test.')
+@unittest2.skipUnless(connection.vendor == 'mysql', 'MySQL specific test.')
 class MySQLTests(TestCase):
 
     @staticmethod

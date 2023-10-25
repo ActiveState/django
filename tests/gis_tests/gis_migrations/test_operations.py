@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.contrib.gis.db.models import fields
 from django.contrib.gis.geos import MultiPolygon, Polygon

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 import warnings
 
 from django.conf import settings
@@ -270,7 +270,7 @@ class FieldNamesTests(SimpleTestCase):
 
     max_column_name_length, column_limit_db_alias = get_max_column_name_length()
 
-    @unittest.skipIf(max_column_name_length is None, "The database doesn't have a column name length limit.")
+    @unittest2.skipIf(max_column_name_length is None, "The database doesn't have a column name length limit.")
     def test_M2M_long_column_name(self):
         """
         #13711 -- Model check for long M2M column names when database has
@@ -361,7 +361,7 @@ class FieldNamesTests(SimpleTestCase):
 
         self.assertEqual(errors, expected)
 
-    @unittest.skipIf(max_column_name_length is None, "The database doesn't have a column name length limit.")
+    @unittest2.skipIf(max_column_name_length is None, "The database doesn't have a column name length limit.")
     def test_local_field_long_column_name(self):
         """
         #13711 -- Model check for long column names

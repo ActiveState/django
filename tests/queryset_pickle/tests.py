@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import pickle
-import unittest
+import unittest2
 
 from django.db import models
 from django.test import TestCase
@@ -35,7 +35,7 @@ class PickleabilityTestCase(TestCase):
     def test_standalone_method_as_default(self):
         self.assert_pickles(Happening.objects.filter(number1=1))
 
-    @unittest.skipIf(six.PY2, "Field doesn't exist on Python 2.")
+    @unittest2.skipIf(six.PY2, "Field doesn't exist on Python 2.")
     def test_staticmethod_as_default(self):
         self.assert_pickles(Happening.objects.filter(number2=1))
 

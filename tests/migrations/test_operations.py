@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.core.exceptions import FieldDoesNotExist
 from django.db import connection, migrations, models, transaction
@@ -1841,7 +1841,7 @@ class OperationTests(OperationTestBase):
         self.assertColumnExists("test_afknfk_rider", "pony_id")
         self.assertColumnNotExists("test_afknfk_rider", "pony")
 
-    @unittest.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
+    @unittest2.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
     def test_run_sql(self):
         """
         Tests the RunSQL operation.
@@ -2326,7 +2326,7 @@ class OperationTests(OperationTestBase):
             operation.database_forwards("test_runpython", editor, project_state, new_state)
             operation.database_backwards("test_runpython", editor, new_state, project_state)
 
-    @unittest.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
+    @unittest2.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
     def test_separate_database_and_state(self):
         """
         Tests the SeparateDatabaseAndState operation.

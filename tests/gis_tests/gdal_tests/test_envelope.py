@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 
 from django.contrib.gis.gdal import Envelope, GDALException
 
@@ -9,7 +9,7 @@ class TestPoint(object):
         self.y = y
 
 
-class EnvelopeTest(unittest.TestCase):
+class EnvelopeTest(unittest2.TestCase):
 
     def setUp(self):
         self.e = Envelope(0, 0, 5, 5)

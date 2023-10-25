@@ -3,14 +3,14 @@ A series of tests to establish that the command-line bash completion works.
 """
 import os
 import sys
-import unittest
+import unittest2
 
 from django.apps import apps
 from django.core.management import ManagementUtility
 from django.test.utils import captured_stdout
 
 
-class BashCompletionTests(unittest.TestCase):
+class BashCompletionTests(unittest2.TestCase):
     """
     Testing the Python level bash completion code.
     This requires setting up the environment as if we got passed data

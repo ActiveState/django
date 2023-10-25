@@ -5,7 +5,7 @@ import datetime
 import json
 import os
 import re
-import unittest
+import unittest2
 
 from django.contrib.admin import AdminSite, ModelAdmin
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
@@ -5267,7 +5267,7 @@ except ImportError:
     docutils = None
 
 
-@unittest.skipUnless(docutils, "no docutils installed.")
+@unittest2.skipUnless(docutils, "no docutils installed.")
 @override_settings(ROOT_URLCONF='admin_views.urls')
 @modify_settings(INSTALLED_APPS={'append': ['django.contrib.admindocs', 'django.contrib.flatpages']})
 class AdminDocsTest(TestCase):

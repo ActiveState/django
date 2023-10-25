@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.core.exceptions import ValidationError
 from django.db import connection, models

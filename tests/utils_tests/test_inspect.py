@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 
 from django.utils import inspect
 
@@ -17,7 +17,7 @@ class Person(object):
         return kwargs
 
 
-class TestInspectMethods(unittest.TestCase):
+class TestInspectMethods(unittest2.TestCase):
     def test_get_func_full_args_no_arguments(self):
         self.assertEqual(inspect.get_func_full_args(Person.no_arguments), [])
 

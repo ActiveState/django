@@ -1,5 +1,5 @@
 import warnings
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.conf import settings
 from django.utils.deprecation import RemovedInDjango20Warning

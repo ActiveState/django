@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import sys
-import unittest
+import unittest2
 
 from django.conf import settings
 from django.contrib.admindocs import utils, views
@@ -18,7 +18,7 @@ from .models import Company, Person
 from .tests import AdminDocsTestCase, TestDataMixin
 
 
-@unittest.skipUnless(utils.docutils_is_available, "no docutils installed.")
+@unittest2.skipUnless(utils.docutils_is_available, "no docutils installed.")
 class AdminDocViewTests(TestDataMixin, AdminDocsTestCase):
 
     def setUp(self):
@@ -61,7 +61,7 @@ class AdminDocViewTests(TestDataMixin, AdminDocsTestCase):
             html=True,
         )
 
-    @unittest.skipIf(six.PY2, "Python 2 doesn't support __qualname__.")
+    @unittest2.skipIf(six.PY2, "Python 2 doesn't support __qualname__.")
     def test_view_index_with_method(self):
         """
         Views that are methods are listed correctly.
@@ -138,7 +138,7 @@ class AdminDocViewTests(TestDataMixin, AdminDocsTestCase):
         self.assertContains(response, 'View documentation')
 
 
-@unittest.skipUnless(utils.docutils_is_available, 'no docutils installed.')
+@unittest2.skipUnless(utils.docutils_is_available, 'no docutils installed.')
 class AdminDocViewDefaultEngineOnly(TestDataMixin, AdminDocsTestCase):
 
     def setUp(self):
@@ -166,7 +166,7 @@ class AdminDocViewDefaultEngineOnly(TestDataMixin, AdminDocsTestCase):
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'APP_DIRS': True,
 }])
-@unittest.skipUnless(utils.docutils_is_available, "no docutils installed.")
+@unittest2.skipUnless(utils.docutils_is_available, "no docutils installed.")
 class AdminDocViewWithMultipleEngines(AdminDocViewTests):
 
     def test_templatefilter_index(self):
@@ -182,7 +182,7 @@ class AdminDocViewWithMultipleEngines(AdminDocViewTests):
         self.assertContains(response, '<title>Template tags</title>', html=True)
 
 
-@unittest.skipUnless(utils.docutils_is_available, "no docutils installed.")
+@unittest2.skipUnless(utils.docutils_is_available, "no docutils installed.")
 class TestModelDetailView(TestDataMixin, AdminDocsTestCase):
 
     def setUp(self):
@@ -331,7 +331,7 @@ class DescriptionLackingField(models.Field):
     pass
 
 
-class TestFieldType(unittest.TestCase):
+class TestFieldType(unittest2.TestCase):
     def setUp(self):
         pass
 

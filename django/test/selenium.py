@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import sys
-import unittest
+import unittest2
 from contextlib import contextmanager
 
 from django.test import LiveServerTestCase, tag
@@ -45,7 +45,7 @@ class SeleniumTestCaseBase(type(LiveServerTestCase)):
                 setattr(module, browser_test_class.__name__, browser_test_class)
             return test_class
         # If no browsers were specified, skip this class (it'll still be discovered).
-        return unittest.skip('No browsers specified.')(test_class)
+        return unittest2.skip('No browsers specified.')(test_class)
 
     @classmethod
     def import_webdriver(cls, browser):

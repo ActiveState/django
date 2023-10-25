@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import unittest
+import unittest2
 import uuid
 from copy import deepcopy
 
@@ -621,7 +621,7 @@ class IterableLookupInnerExpressionsTests(TestCase):
             ordered=False
         )
 
-    @unittest.skipUnless(connection.vendor == 'sqlite',
+    @unittest2.skipUnless(connection.vendor == 'sqlite',
                          "This defensive test only works on databases that don't validate parameter types")
     def test_complex_expressions_do_not_introduce_sql_injection_via_untrusted_string_inclusion(self):
         """

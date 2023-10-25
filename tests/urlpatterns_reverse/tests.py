@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 import sys
 import threading
-import unittest
+import unittest2
 
 from admin_scripts.tests import AdminScriptTestCase
 
@@ -466,7 +466,7 @@ class ResolverTests(SimpleTestCase):
         self.assertTrue(resolver._is_callback('urlpatterns_reverse.nested_urls.View3'))
         self.assertFalse(resolver._is_callback('urlpatterns_reverse.nested_urls.blub'))
 
-    @unittest.skipIf(six.PY2, "Python 2 doesn't support __qualname__.")
+    @unittest2.skipIf(six.PY2, "Python 2 doesn't support __qualname__.")
     def test_view_detail_as_method(self):
         # Views which have a class name as part of their path.
         resolver = get_resolver('urlpatterns_reverse.method_view_urls')

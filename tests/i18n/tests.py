@@ -9,7 +9,7 @@ import pickle
 from contextlib import contextmanager
 from importlib import import_module
 from threading import local
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django import forms
 from django.conf import settings

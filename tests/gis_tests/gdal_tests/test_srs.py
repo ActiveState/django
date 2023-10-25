@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.contrib.gis.gdal import (
     CoordTransform, GDALException, SpatialReference, SRSException,
@@ -149,7 +149,7 @@ bad_srlist = (
 )
 
 
-class SpatialRefTest(unittest.TestCase):
+class SpatialRefTest(unittest2.TestCase):
 
     def test01_wkt(self):
         "Testing initialization on valid OGC WKT."

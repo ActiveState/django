@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 import sys
-import unittest
+import unittest2
 
 from django.utils import six
 from django.utils.encoding import (
@@ -14,7 +14,7 @@ from django.utils.functional import SimpleLazyObject
 from django.utils.http import urlquote_plus
 
 
-class TestEncodingUtils(unittest.TestCase):
+class TestEncodingUtils(unittest2.TestCase):
     def test_force_text_exception(self):
         """
         Broken __unicode__/__str__ actually raises an error.
@@ -87,7 +87,7 @@ class TestEncodingUtils(unittest.TestCase):
             self.fail('Unexpected RecursionError raised.')
 
 
-class TestRFC3987IEncodingUtils(unittest.TestCase):
+class TestRFC3987IEncodingUtils(unittest2.TestCase):
 
     def test_filepath_to_uri(self):
         self.assertEqual(filepath_to_uri('upload\\чубака.mp4'), 'upload/%D1%87%D1%83%D0%B1%D0%B0%D0%BA%D0%B0.mp4')

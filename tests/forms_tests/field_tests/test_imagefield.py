@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import os
-import unittest
+import unittest2
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.forms import ImageField, ValidationError
@@ -18,7 +18,7 @@ def get_img_path(path):
     return os.path.join(os.path.abspath(os.path.join(upath(__file__), '..', '..')), 'tests', path)
 
 
-@unittest.skipUnless(Image, "Pillow is required to test ImageField")
+@unittest2.skipUnless(Image, "Pillow is required to test ImageField")
 class ImageFieldTest(SimpleTestCase):
 
     def test_imagefield_annotate_with_image_after_clean(self):

@@ -1,5 +1,5 @@
 import sys
-import unittest
+import unittest2
 
 from django.test import SimpleTestCase
 from django.test.runner import RemoteTestResult
@@ -29,7 +29,7 @@ class ParallelTestRunnerTest(SimpleTestCase):
     parallel.
     """
 
-    @unittest.skipUnless(six.PY3, 'subtests were added in Python 3.4')
+    @unittest2.skipUnless(six.PY3, 'subtests were added in Python 3.4')
     def test_subtest(self):
         """
         Passing subtests work.
@@ -67,7 +67,7 @@ class RemoteTestResultTest(SimpleTestCase):
         with self.assertRaisesMessage(TypeError, msg):
             result._confirm_picklable(not_unpicklable_error)
 
-    @unittest.skipUnless(six.PY3 and tblib is not None, 'requires tblib to be installed')
+    @unittest2.skipUnless(six.PY3 and tblib is not None, 'requires tblib to be installed')
     def test_add_failing_subtests(self):
         """
         Failing subtests are added correctly using addSubTest().

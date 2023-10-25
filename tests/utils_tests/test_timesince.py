@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
 
 import datetime
-import unittest
+import unittest2
 
 from django.test.utils import requires_tz_support
 from django.utils import timezone
 from django.utils.timesince import timesince, timeuntil
 
 
-class TimesinceTests(unittest.TestCase):
+class TimesinceTests(unittest2.TestCase):
 
     def setUp(self):
         self.t = datetime.datetime(2007, 8, 14, 13, 46, 0)

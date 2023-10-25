@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import gettext as gettext_module
 import os
 import stat
-import unittest
+import unittest2
 from subprocess import Popen
 
 from django.core.management import (
@@ -26,7 +26,7 @@ from .utils import RunInTmpDirMixin, copytree
 has_msgfmt = find_command('msgfmt')
 
 
-@unittest.skipUnless(has_msgfmt, 'msgfmt is mandatory for compilation tests')
+@unittest2.skipUnless(has_msgfmt, 'msgfmt is mandatory for compilation tests')
 class MessageCompilationTests(RunInTmpDirMixin, SimpleTestCase):
 
     work_subdir = 'commands'

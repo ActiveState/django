@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import sys
 from datetime import time
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.forms import TimeInput
 from django.test import override_settings

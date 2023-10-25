@@ -9,7 +9,7 @@ import os
 import re
 import sys
 import tokenize
-import unittest
+import unittest2
 import uuid
 
 import custom_migration_operations.more_operations
@@ -267,7 +267,7 @@ class WriterTests(SimpleTestCase):
         lazy_pattern = SimpleLazyObject(lambda: pattern)
         self.assertEqual(self.serialize_round_trip(lazy_pattern), pattern)
 
-    @unittest.skipUnless(enum, "enum34 is required on Python 2")
+    @unittest2.skipUnless(enum, "enum34 is required on Python 2")
     def test_serialize_enums(self):
         class TextEnum(enum.Enum):
             A = 'a-value'
@@ -489,7 +489,7 @@ class WriterTests(SimpleTestCase):
         self.assertEqual(string, 'range')
         self.assertEqual(imports, set())
 
-    @unittest.skipUnless(six.PY2, "Only applies on Python 2")
+    @unittest2.skipUnless(six.PY2, "Only applies on Python 2")
     def test_serialize_direct_function_reference(self):
         """
         Ticket #22436: You cannot use a function straight from its body

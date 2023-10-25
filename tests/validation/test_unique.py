@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import unittest
+import unittest2
 
 from django.apps.registry import Apps
 from django.core.exceptions import ValidationError
@@ -14,7 +14,7 @@ from .models import (
 )
 
 
-class GetUniqueCheckTests(unittest.TestCase):
+class GetUniqueCheckTests(unittest2.TestCase):
     def test_unique_fields_get_collected(self):
         m = UniqueFieldsModel()
         self.assertEqual(

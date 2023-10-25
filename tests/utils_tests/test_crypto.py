@@ -2,12 +2,12 @@ from __future__ import unicode_literals
 
 import binascii
 import hashlib
-import unittest
+import unittest2
 
 from django.utils.crypto import constant_time_compare, pbkdf2
 
 
-class TestUtilsCryptoMisc(unittest.TestCase):
+class TestUtilsCryptoMisc(unittest2.TestCase):
 
     def test_constant_time_compare(self):
         # It's hard to test for constant time, just test the result.
@@ -17,7 +17,7 @@ class TestUtilsCryptoMisc(unittest.TestCase):
         self.assertFalse(constant_time_compare('spam', 'eggs'))
 
 
-class TestUtilsCryptoPBKDF2(unittest.TestCase):
+class TestUtilsCryptoPBKDF2(unittest2.TestCase):
 
     # http://tools.ietf.org/html/draft-josefsson-pbkdf2-test-vectors-06
     rfc_vectors = [

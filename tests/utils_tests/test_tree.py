@@ -1,10 +1,10 @@
 import copy
-import unittest
+import unittest2
 
 from django.utils.tree import Node
 
 
-class NodeTests(unittest.TestCase):
+class NodeTests(unittest2.TestCase):
     def setUp(self):
         self.node1_children = [('a', 1), ('b', 2)]
         self.node1 = Node(self.node1_children)

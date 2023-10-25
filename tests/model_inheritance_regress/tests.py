@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import datetime
 from operator import attrgetter
-from unittest import expectedFailure
+from unittest2 import expectedFailure
 
 from django import forms
 from django.test import TestCase

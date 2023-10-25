@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.db import connection
 from django.db.models import Index

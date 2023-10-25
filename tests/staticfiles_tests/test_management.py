@@ -5,7 +5,7 @@ import datetime
 import os
 import shutil
 import tempfile
-import unittest
+import unittest2
 
 from admin_scripts.tests import AdminScriptTestCase
 
@@ -416,7 +416,7 @@ class TestCollectionNeverCopyStorage(CollectionTestCase):
         self.assertIn("Skipping 'test.txt' (not modified)", output)
 
 
-@unittest.skipUnless(symlinks_supported(), "Must be able to symlink to run this test.")
+@unittest2.skipUnless(symlinks_supported(), "Must be able to symlink to run this test.")
 class TestCollectionLinks(TestDefaults, CollectionTestCase):
     """
     Test ``--link`` option for ``collectstatic`` management command.

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import sys
 import traceback
 from io import BytesIO
-from unittest import TestCase
+from unittest2 import TestCase
 from wsgiref import simple_server
 
 # If data is too large, socket will choke, so write chunks no larger than 32MB

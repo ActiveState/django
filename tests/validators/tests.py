@@ -6,7 +6,7 @@ import os
 import re
 import types
 from datetime import datetime, timedelta
-from unittest import TestCase, skipUnless
+from unittest2 import TestCase, skipUnless
 
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile

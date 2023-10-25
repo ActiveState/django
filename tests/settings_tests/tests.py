@@ -1,6 +1,6 @@
 import os
 import sys
-import unittest
+import unittest2
 import warnings
 from types import ModuleType
 
@@ -203,7 +203,7 @@ class SettingsTests(SimpleTestCase):
         class SimpleTestCaseSubclass(SimpleTestCase):
             pass
 
-        class UnittestTestCaseSubclass(unittest.TestCase):
+        class UnittestTestCaseSubclass(unittest2.TestCase):
             pass
 
         decorated = override_settings(TEST='override')(SimpleTestCaseSubclass)
@@ -397,7 +397,7 @@ class IsOverriddenTest(SimpleTestCase):
         self.assertEqual(repr(lazy_settings), expected)
 
 
-class TestListSettings(unittest.TestCase):
+class TestListSettings(unittest2.TestCase):
     """
     Make sure settings that should be lists or tuples throw
     ImproperlyConfigured if they are set to a string instead of a list or tuple.

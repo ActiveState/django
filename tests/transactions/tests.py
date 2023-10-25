@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import sys
 import threading
 import time
-from unittest import skipIf, skipUnless
+from unittest2 import skipIf, skipUnless
 
 from django.db import (
     DatabaseError, Error, IntegrityError, OperationalError, connection,

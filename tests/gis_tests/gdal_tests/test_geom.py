@@ -1,5 +1,5 @@
 import json
-import unittest
+import unittest2
 from binascii import b2a_hex
 
 from django.contrib.gis.gdal import (
@@ -16,7 +16,7 @@ except ImportError:
     import pickle
 
 
-class OGRGeomTest(unittest.TestCase, TestDataMixin):
+class OGRGeomTest(unittest2.TestCase, TestDataMixin):
     "This tests the OGR Geometry."
 
     def test_geomtype(self):

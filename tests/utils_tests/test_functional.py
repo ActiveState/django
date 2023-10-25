@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.utils import six
 from django.utils.functional import cached_property, lazy
 
 
-class FunctionalTestCase(unittest.TestCase):
+class FunctionalTestCase(unittest2.TestCase):
     def test_lazy(self):
         t = lazy(lambda: tuple(range(3)), list, tuple)
         for a, b in zip(t(), range(3)):

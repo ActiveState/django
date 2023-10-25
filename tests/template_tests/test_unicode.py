@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.template import Context, Engine
 from django.template.base import TemplateEncodingError

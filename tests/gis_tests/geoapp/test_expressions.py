@@ -1,4 +1,4 @@
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.contrib.gis.db.models import GeometryField, Value, functions
 from django.contrib.gis.geos import Point, Polygon

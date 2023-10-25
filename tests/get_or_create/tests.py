@@ -4,7 +4,7 @@ import time
 import traceback
 from datetime import date, datetime, timedelta
 from threading import Thread
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.core.exceptions import FieldError
 from django.db import DatabaseError, IntegrityError, connection

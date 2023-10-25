@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 
 from forms_tests.widget_tests.base import WidgetTest
 
@@ -7,7 +7,7 @@ from django.db.backends.signals import connection_created
 from django.test import TestCase, modify_settings
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
 class PostgreSQLTestCase(TestCase):
     @classmethod
     def tearDownClass(cls):
@@ -18,7 +18,7 @@ class PostgreSQLTestCase(TestCase):
         super(PostgreSQLTestCase, cls).tearDownClass()
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
 # To locate the widget's template.
 @modify_settings(INSTALLED_APPS={'append': 'django.contrib.postgres'})
 class PostgreSQLWidgetTestCase(WidgetTest, PostgreSQLTestCase):

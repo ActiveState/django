@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-import unittest
+import unittest2
 from decimal import Decimal
 
 from django.db.models.fields import (
@@ -24,7 +24,7 @@ class PromiseTest(SimpleTestCase):
         lazy_func = lazy(lambda: 1, int)
         self.assertIsInstance(AutoField(primary_key=True).get_prep_value(lazy_func()), int)
 
-    @unittest.skipIf(six.PY3, 'Python 3 has no `long` type.')
+    @unittest2.skipIf(six.PY3, 'Python 3 has no `long` type.')
     def test_BigIntegerField(self):
         lazy_func = lazy(lambda: long(9999999999999999999), long)  # NOQA: long undefined on PY3
         self.assertIsInstance(BigIntegerField().get_prep_value(lazy_func()), long)  # NOQA

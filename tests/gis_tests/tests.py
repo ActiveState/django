@@ -1,5 +1,5 @@
 import sys
-import unittest
+import unittest2
 
 from django.core.exceptions import ImproperlyConfigured
 from django.db import ProgrammingError
@@ -46,8 +46,8 @@ if HAS_POSTGRES:
                 raise NotImplementedError('This function was not expected to be called')
 
 
-@unittest.skipUnless(HAS_POSTGRES, "The psycopg2 driver is needed for these tests")
-class TestPostGISVersionCheck(unittest.TestCase):
+@unittest2.skipUnless(HAS_POSTGRES, "The psycopg2 driver is needed for these tests")
+class TestPostGISVersionCheck(unittest2.TestCase):
     """
     The PostGIS version check parses correctly the version numbers
     """
