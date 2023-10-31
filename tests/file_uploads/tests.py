@@ -603,7 +603,7 @@ class FileUploadTests(TestCase):
         except ImportError:
             from pathlib2 import Path
 
-        Path(UPLOAD_TO).mkdir(exist_ok=True, parents=True)
+            Path(UPLOAD_TO).mkdir(exist_ok=True, parents=True)
         self.addCleanup(shutil.rmtree, MEDIA_ROOT)
         tests = [
             '..&#x2F;test.txt',

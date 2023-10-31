@@ -92,7 +92,7 @@ class TestGzipTar(ArchiveTester, unittest2.TestCase):
 class TestBzip2Tar(ArchiveTester, unittest2.TestCase):
     archive = 'foobar.tar.bz2'
 
-
+    
 class TestArchiveInvalid(SimpleTestCase):
     def test_extract_function_traversal(self):
         archives_dir = os.path.join(os.path.dirname(__file__), 'traversal_archives')
