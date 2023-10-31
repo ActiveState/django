@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import os
-import unittest
+import unittest2
 from copy import copy
 from decimal import Decimal
 
@@ -336,7 +336,7 @@ class OtherRouter(object):
 @override_settings(DATABASE_ROUTERS=[OtherRouter()])
 class LayerMapRouterTest(TestCase):
 
-    @unittest.skipUnless(len(settings.DATABASES) > 1, 'multiple databases required')
+    @unittest2.skipUnless(len(settings.DATABASES) > 1, 'multiple databases required')
     def test_layermapping_default_db(self):
         lm = LayerMapping(City, city_shp, city_mapping)
         self.assertEqual(lm.using, 'other')

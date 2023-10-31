@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 import warnings
 from datetime import datetime
 
@@ -15,7 +15,7 @@ from .custom import ValidAdjacentNumsPaginator
 from .models import Article
 
 
-class PaginationTests(unittest.TestCase):
+class PaginationTests(unittest2.TestCase):
     """
     Tests for the Paginator and Page classes.
     """

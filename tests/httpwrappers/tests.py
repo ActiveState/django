@@ -5,7 +5,7 @@ import copy
 import json
 import os
 import pickle
-import unittest
+import unittest2
 import uuid
 
 from django.core.exceptions import DisallowedRedirect, SuspiciousOperation
@@ -310,7 +310,7 @@ class QueryDictTests(SimpleTestCase):
             QueryDict.fromkeys(0)
 
 
-class HttpResponseTests(unittest.TestCase):
+class HttpResponseTests(unittest2.TestCase):
 
     def test_headers_type(self):
         r = HttpResponse()
@@ -714,7 +714,7 @@ class FileCloseTests(SimpleTestCase):
         self.assertTrue(file2.closed)
 
 
-class CookieTests(unittest.TestCase):
+class CookieTests(unittest2.TestCase):
     def test_encode(self):
         """Semicolons and commas are encoded."""
         c = SimpleCookie()
@@ -810,7 +810,7 @@ class CookieTests(unittest.TestCase):
         c.load({'name': 'val'})
         self.assertEqual(c['name'].value, 'val')
 
-    @unittest.skipUnless(six.PY2, "PY3 throws an exception on invalid cookie keys.")
+    @unittest2.skipUnless(six.PY2, "PY3 throws an exception on invalid cookie keys.")
     def test_bad_cookie(self):
         """
         Regression test for #18403

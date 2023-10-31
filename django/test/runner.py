@@ -5,7 +5,7 @@ import multiprocessing
 import os
 import pickle
 import textwrap
-import unittest
+import unittest2
 import warnings
 from importlib import import_module
 
@@ -26,7 +26,7 @@ except ImportError:
     tblib = None
 
 
-class DebugSQLTextTestResult(unittest.TextTestResult):
+class DebugSQLTextTestResult(unittest2.TextTestResult):
     def __init__(self, stream, descriptions, verbosity):
         self.logger = logging.getLogger('django.db.backends')
         self.logger.setLevel(logging.DEBUG)
@@ -246,7 +246,7 @@ class RemoteTestRunner(object):
 
     def run(self, test):
         result = self.resultclass()
-        unittest.registerResult(result)
+        unittest2.registerResult(result)
         result.failfast = self.failfast
         test(result)
         return result
@@ -308,7 +308,7 @@ def _run_subsuite(args):
     return subsuite_index, result.events
 
 
-class ParallelTestSuite(unittest.TestSuite):
+class ParallelTestSuite(unittest2.TestSuite):
     """
     Run a series of tests in parallel in several processes.
 
@@ -394,10 +394,10 @@ class DiscoverRunner(object):
     A Django test runner that uses unittest2 test discovery.
     """
 
-    test_suite = unittest.TestSuite
+    test_suite = unittest2.TestSuite
     parallel_test_suite = ParallelTestSuite
-    test_runner = unittest.TextTestRunner
-    test_loader = unittest.defaultTestLoader
+    test_runner = unittest2.TextTestRunner
+    test_loader = unittest2.defaultTestLoader
     reorder_by = (TestCase, SimpleTestCase)
 
     def __init__(self, pattern=None, top_level=None, verbosity=1,
@@ -460,7 +460,7 @@ class DiscoverRunner(object):
 
     def setup_test_environment(self, **kwargs):
         setup_test_environment(debug=self.debug_mode)
-        unittest.installHandler()
+        unittest2.installHandler()
 
     def build_suite(self, test_labels=None, extra_tests=None, **kwargs):
         suite = self.test_suite()
@@ -578,7 +578,7 @@ class DiscoverRunner(object):
         )
 
     def teardown_test_environment(self, **kwargs):
-        unittest.removeHandler()
+        unittest2.removeHandler()
         teardown_test_environment()
 
     def suite_result(self, suite, result, **kwargs):
@@ -677,7 +677,7 @@ def partition_suite_by_case(suite):
     groups = []
     suite_class = type(suite)
     for test_type, test_group in itertools.groupby(suite, type):
-        if issubclass(test_type, unittest.TestCase):
+        if issubclass(test_type, unittest2.TestCase):
             groups.append(suite_class(test_group))
         else:
             for item in test_group:

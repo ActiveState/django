@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 import re
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django import forms
 from django.contrib.auth.forms import (

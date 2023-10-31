@@ -3,7 +3,7 @@ import shutil
 import stat
 import sys
 import tempfile
-import unittest
+import unittest2
 
 from django.core.exceptions import SuspiciousOperation
 from django.test import SimpleTestCase
@@ -47,7 +47,7 @@ class ArchiveTester(object):
         extract(self.archive_path, self.tmpdir)
         self.check_files(self.tmpdir)
 
-    @unittest.skipIf(sys.platform == 'win32', 'Python on Windows has a limited os.chmod().')
+    @unittest2.skipIf(sys.platform == 'win32', 'Python on Windows has a limited os.chmod().')
     def test_extract_file_permissions(self):
         """Archive.extract() preserves file permissions."""
         extract(self.archive_path, self.tmpdir)
@@ -77,19 +77,19 @@ class ArchiveTester(object):
         self.assertTrue(os.path.isfile(os.path.join(self.tmpdir, 'foo', 'bar', '2')))
 
 
-class TestZip(ArchiveTester, unittest.TestCase):
+class TestZip(ArchiveTester, unittest2.TestCase):
     archive = 'foobar.zip'
 
 
-class TestTar(ArchiveTester, unittest.TestCase):
+class TestTar(ArchiveTester, unittest2.TestCase):
     archive = 'foobar.tar'
 
 
-class TestGzipTar(ArchiveTester, unittest.TestCase):
+class TestGzipTar(ArchiveTester, unittest2.TestCase):
     archive = 'foobar.tar.gz'
 
 
-class TestBzip2Tar(ArchiveTester, unittest.TestCase):
+class TestBzip2Tar(ArchiveTester, unittest2.TestCase):
     archive = 'foobar.tar.bz2'
 
     

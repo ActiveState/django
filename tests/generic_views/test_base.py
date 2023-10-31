@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import time
-import unittest
+import unittest2
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
@@ -67,7 +67,7 @@ class InstanceView(View):
         return self
 
 
-class ViewTest(unittest.TestCase):
+class ViewTest(unittest2.TestCase):
     rf = RequestFactory()
 
     def _assert_simple(self, response):
@@ -466,7 +466,7 @@ class RedirectViewTest(SimpleTestCase):
         self.assertEqual(response.status_code, 410)
 
 
-class GetContextDataTest(unittest.TestCase):
+class GetContextDataTest(unittest2.TestCase):
 
     def test_get_context_data_super(self):
         test_view = views.CustomContextView()
@@ -495,7 +495,7 @@ class GetContextDataTest(unittest.TestCase):
         self.assertEqual(context['object'], test_view.object)
 
 
-class UseMultipleObjectMixinTest(unittest.TestCase):
+class UseMultipleObjectMixinTest(unittest2.TestCase):
     rf = RequestFactory()
 
     def test_use_queryset_from_view(self):
@@ -515,7 +515,7 @@ class UseMultipleObjectMixinTest(unittest.TestCase):
         self.assertEqual(context['object_list'], queryset)
 
 
-class SingleObjectTemplateResponseMixinTest(unittest.TestCase):
+class SingleObjectTemplateResponseMixinTest(unittest2.TestCase):
 
     def test_template_mixin_without_template(self):
         """

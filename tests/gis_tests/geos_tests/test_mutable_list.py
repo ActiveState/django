@@ -4,7 +4,7 @@
 # Modified from original contribution by Aryeh Leib Taurog, which was
 # released under the New BSD license.
 
-import unittest
+import unittest2
 
 from django.contrib.gis.geos.mutable_list import ListMixin
 from django.utils import six
@@ -55,7 +55,7 @@ def nextRange(length):
 nextRange.start = 0
 
 
-class ListMixinTest(unittest.TestCase):
+class ListMixinTest(unittest2.TestCase):
     """
     Tests base class ListMixin by comparing a list clone which is
     a ListMixin subclass with a real Python list.

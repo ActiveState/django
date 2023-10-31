@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.contrib.admindocs.utils import (
     docutils_is_available, parse_docstring, parse_rst, trim_docstring,
@@ -9,7 +9,7 @@ from django.contrib.admindocs.utils import (
 from .tests import AdminDocsTestCase
 
 
-@unittest.skipUnless(docutils_is_available, "no docutils installed.")
+@unittest2.skipUnless(docutils_is_available, "no docutils installed.")
 class TestUtils(AdminDocsTestCase):
     """
     This __doc__ output is required for testing. I copied this example from

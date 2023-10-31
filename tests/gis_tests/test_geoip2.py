@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 import os
-import unittest
-from unittest import skipUnless
+import unittest2
+from unittest2 import skipUnless
 
 from django.conf import settings
 from django.contrib.gis.geoip2 import HAS_GEOIP2
@@ -23,7 +23,7 @@ if HAS_GEOIP2:
     HAS_GEOIP2 and getattr(settings, "GEOIP_PATH", None),
     "GeoIP is required along with the GEOIP_PATH setting."
 )
-class GeoIPTest(unittest.TestCase):
+class GeoIPTest(unittest2.TestCase):
     addr = '75.41.39.1'
     fqdn = 'tmc.edu'
 

@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
 
 import datetime
-import unittest
+import unittest2
 
 from django.test import TestCase
 from django.utils import feedgenerator
 from django.utils.timezone import get_fixed_timezone, utc
 
 
-class FeedgeneratorTest(unittest.TestCase):
+class FeedgeneratorTest(unittest2.TestCase):
     """
     Tests for the low-level syndication feed framework.
     """

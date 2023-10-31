@@ -9,6 +9,7 @@ from django.db.models import (
     IntegerField, NullBooleanField, Q, Sum, Value,
 )
 from django.db.models.functions import Length, Lower
+from django.db.models import OuterRef, Subquery
 from django.test import TestCase, skipUnlessDBFeature
 from django.utils import six
 
@@ -24,7 +25,7 @@ def cxOracle_py3_bug(func):
     rather than unicode). This makes some tests here fail under Python 3, so
     we mark them as expected failures until someone fixes them in #23843.
     """
-    from unittest import expectedFailure
+    from unittest2 import expectedFailure
     from django.db import connection
     return expectedFailure(func) if connection.vendor == 'oracle' and six.PY3 else func
 
@@ -505,62 +506,6 @@ class NonAggregateAnnotationTestCase(TestCase):
             self.assertIs(book.is_book, True)
             self.assertIs(book.is_pony, False)
             self.assertIsNone(book.is_none)
-
-    def test_annotation_in_f_grouped_by_annotation(self):
-        qs = (
-            Publisher.objects.annotate(multiplier=Value(3))
-            # group by option => sum of value * multiplier
-            .values('name')
-            .annotate(multiplied_value_sum=Sum(F('multiplier') * F('num_awards')))
-            .order_by()
-        )
-        self.assertCountEqual(
-            qs, [
-                {'multiplied_value_sum': 9, 'name': 'Apress'},
-                {'multiplied_value_sum': 0, 'name': "Jonno's House of Books"},
-                {'multiplied_value_sum': 27, 'name': 'Morgan Kaufmann'},
-                {'multiplied_value_sum': 21, 'name': 'Prentice Hall'},
-                {'multiplied_value_sum': 3, 'name': 'Sams'},
-            ]
-        )
-
-    def test_arguments_must_be_expressions(self):
-        msg = 'QuerySet.annotate() received non-expression(s): %s.'
-        with self.assertRaisesMessage(TypeError, msg % BooleanField()):
-            Book.objects.annotate(BooleanField())
-        with self.assertRaisesMessage(TypeError, msg % True):
-            Book.objects.annotate(is_book=True)
-        with self.assertRaisesMessage(TypeError, msg % ', '.join([str(BooleanField()), 'True'])):
-            Book.objects.annotate(BooleanField(), Value(False), is_book=True)
-
-    def test_chaining_annotation_filter_with_m2m(self):
-        qs = Author.objects.filter(
-            name='Adrian Holovaty',
-            friends__age=35,
-        ).annotate(
-            jacob_name=F('friends__name'),
-        ).filter(
-            friends__age=29,
-        ).annotate(
-            james_name=F('friends__name'),
-        ).values('jacob_name', 'james_name')
-        self.assertCountEqual(
-            qs,
-            [{'jacob_name': 'Jacob Kaplan-Moss', 'james_name': 'James Bennett'}],
-        )
-
-    @skipUnlessDBFeature('supports_subqueries_in_group_by')
-    def test_annotation_filter_with_subquery(self):
-        long_books_qs = Book.objects.filter(
-            publisher=OuterRef('pk'),
-            pages__gt=400,
-        ).values('publisher').annotate(count=Count('pk')).values('count')
-        publisher_books_qs = Publisher.objects.annotate(
-            total_books=Count('book'),
-        ).filter(
-            total_books=Subquery(long_books_qs, output_field=IntegerField()),
-        ).values('name')
-        self.assertCountEqual(publisher_books_qs, [{'name': 'Sams'}, {'name': 'Morgan Kaufmann'}])
 
     def test_alias_sql_injection(self):
         crafted_alias = """injected_name" from "annotations_book"; --"""

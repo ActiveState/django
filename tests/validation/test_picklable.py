@@ -1,5 +1,5 @@
 import pickle
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.core.exceptions import ValidationError
 

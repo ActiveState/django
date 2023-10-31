@@ -1,11 +1,11 @@
 import os
-import unittest
+import unittest2
 
 from django.core.exceptions import SuspiciousFileOperation
 from django.utils._os import safe_join
 
 
-class SafeJoinTests(unittest.TestCase):
+class SafeJoinTests(unittest2.TestCase):
     def test_base_path_ends_with_sep(self):
         drive, path = os.path.splitdrive(safe_join("/abc/", "abc"))
         self.assertEqual(

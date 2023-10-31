@@ -3,7 +3,7 @@ Tests for django test runner
 """
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from admin_scripts.tests import AdminScriptTestCase
 
@@ -21,7 +21,7 @@ from django.test.utils import dependency_ordered
 from .models import Person
 
 
-class DependencyOrderingTests(unittest.TestCase):
+class DependencyOrderingTests(unittest2.TestCase):
 
     def test_simple_dependencies(self):
         raw = [
@@ -139,7 +139,7 @@ class MockTestRunner(object):
 MockTestRunner.run_tests = mock.Mock(return_value=[])
 
 
-class ManageCommandTests(unittest.TestCase):
+class ManageCommandTests(unittest2.TestCase):
 
     def test_custom_test_runner(self):
         call_command('test', 'sites',
@@ -204,7 +204,7 @@ class Ticket17477RegressionTests(AdminScriptTestCase):
 
 class Sqlite3InMemoryTestDbs(TestCase):
 
-    @unittest.skipUnless(all(db.connections[conn].vendor == 'sqlite' for conn in db.connections),
+    @unittest2.skipUnless(all(db.connections[conn].vendor == 'sqlite' for conn in db.connections),
                          "This is an sqlite-specific issue")
     def test_transaction_support(self):
         """Ticket #16329: sqlite3 in-memory test databases"""
@@ -232,7 +232,7 @@ class Sqlite3InMemoryTestDbs(TestCase):
                     self.assertTrue(connections_support_transactions(), msg)
 
 
-class DummyBackendTest(unittest.TestCase):
+class DummyBackendTest(unittest2.TestCase):
     def test_setup_databases(self):
         """
         setup_databases() doesn't fail with dummy database backend.
@@ -244,7 +244,7 @@ class DummyBackendTest(unittest.TestCase):
             runner_instance.teardown_databases(old_config)
 
 
-class AliasedDefaultTestSetupTest(unittest.TestCase):
+class AliasedDefaultTestSetupTest(unittest2.TestCase):
     def test_setup_aliased_default_database(self):
         """
         setup_datebases() doesn't fail when 'default' is aliased
@@ -263,7 +263,7 @@ class AliasedDefaultTestSetupTest(unittest.TestCase):
             runner_instance.teardown_databases(old_config)
 
 
-class SetupDatabasesTests(unittest.TestCase):
+class SetupDatabasesTests(unittest2.TestCase):
 
     def setUp(self):
         self.runner_instance = DiscoverRunner(verbosity=0)
@@ -349,7 +349,7 @@ class AutoIncrementResetTest(TransactionTestCase):
         self.assertEqual(p.pk, 1)
 
 
-class EmptyDefaultDatabaseTest(unittest.TestCase):
+class EmptyDefaultDatabaseTest(unittest2.TestCase):
     def test_empty_default_database(self):
         """
         An empty default database in settings does not raise an ImproperlyConfigured

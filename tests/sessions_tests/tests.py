@@ -4,7 +4,7 @@ import shutil
 import string
 import sys
 import tempfile
-import unittest
+import unittest2
 from datetime import timedelta
 
 from django.conf import settings
@@ -861,7 +861,7 @@ class CookieSessionTests(SessionTestsMixin, SimpleTestCase):
         """
         pass
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_actual_expiry(self):
         # The cookie backend doesn't handle non-default expiry dates, see #19201
         super(CookieSessionTests, self).test_actual_expiry()
@@ -875,10 +875,10 @@ class CookieSessionTests(SessionTestsMixin, SimpleTestCase):
         self.session.serializer = PickleSerializer
         self.session.load()
 
-    @unittest.skip("Cookie backend doesn't have an external store to create records in.")
+    @unittest2.skip("Cookie backend doesn't have an external store to create records in.")
     def test_session_load_does_not_create_record(self):
         pass
 
-    @unittest.skip("CookieSession is stored in the client and there is no way to query it.")
+    @unittest2.skip("CookieSession is stored in the client and there is no way to query it.")
     def test_session_save_does_not_resurrect_session_logged_out_in_other_context(self):
         pass

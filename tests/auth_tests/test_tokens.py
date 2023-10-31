@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 from datetime import date, timedelta
 
 from django.conf import settings
@@ -51,7 +51,7 @@ class TokenGeneratorTest(TestCase):
         p2 = Mocked(date.today() + timedelta(settings.PASSWORD_RESET_TIMEOUT_DAYS + 1))
         self.assertFalse(p2.check_token(user, tk1))
 
-    @unittest.skipIf(PY3, "Unnecessary test with Python 3")
+    @unittest2.skipIf(PY3, "Unnecessary test with Python 3")
     def test_date_length(self):
         """
         Overly long dates, which are a potential DoS vector, aren't allowed.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import Group
 from django.test import SimpleTestCase, override_settings
 
@@ -32,10 +33,10 @@ class DebugTests(SimpleTestCase):
 
     @setup({'non_ascii': '{% debug %}'})
     def test_non_ascii(self):
-        group = Group(name="清風")
+        group = Group(name=u"清風")
         output = self.engine.render_to_string('non_ascii', {'group': group})
         self.assertTrue(output.startswith(
-            '{&#39;group&#39;: &lt;Group: 清風&gt;}'
+            u'{&#39;group&#39;: &lt;Group: 清風&gt;}'
         ))
 
     @setup({'script': '{% debug %}'})

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.core.exceptions import ValidationError
 from django.db import models

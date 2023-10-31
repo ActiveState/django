@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.utils.ipv6 import clean_ipv6_address, is_valid_ipv6_address
 
 
-class TestUtilsIPv6(unittest.TestCase):
+class TestUtilsIPv6(unittest2.TestCase):
 
     def test_validates_correct_plain_address(self):
         self.assertTrue(is_valid_ipv6_address('fe80::223:6cff:fe8a:2e8a'))

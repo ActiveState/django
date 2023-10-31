@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import json
 import os
 import re
-import unittest
+import unittest2
 import warnings
 
 import django
@@ -39,7 +39,7 @@ def is_ascii(s):
     return all(ord(c) < 128 for c in s)
 
 
-skipIfNonASCIIPath = unittest.skipIf(
+skipIfNonASCIIPath = unittest2.skipIf(
     not is_ascii(django.__file__) and six.PY2,
     'Python 2 crashes when checking non-ASCII exception messages.'
 )

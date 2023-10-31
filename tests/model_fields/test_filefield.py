@@ -1,6 +1,6 @@
 import os
 import sys
-import unittest
+import unittest2
 
 from django.core.files import temp
 from django.core.files.uploadedfile import TemporaryUploadedFile
@@ -71,7 +71,7 @@ class FileFieldTests(TestCase):
         with self.assertRaises(IntegrityError):
             Document.objects.create(myfile='something.txt')
 
-    @unittest.skipIf(sys.platform.startswith('win'), "Windows doesn't support moving open files.")
+    @unittest2.skipIf(sys.platform.startswith('win'), "Windows doesn't support moving open files.")
     # The file's source and destination must be on the same filesystem.
     @override_settings(MEDIA_ROOT=temp.gettempdir())
     def test_move_temporary_file(self):

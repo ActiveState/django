@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 import sys
-import unittest
+import unittest2
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.handlers.wsgi import WSGIHandler, WSGIRequest, get_script_name
@@ -203,7 +203,7 @@ class HandlerRequestTests(SimpleTestCase):
         environ = RequestFactory().get('/%E2%A8%87%87%A5%E2%A8%A0').environ
         self.assertIsInstance(environ['PATH_INFO'], six.text_type)
 
-    @unittest.skipIf(HTTPStatus is None, 'HTTPStatus only exists on Python 3.5+')
+    @unittest2.skipIf(HTTPStatus is None, 'HTTPStatus only exists on Python 3.5+')
     def test_handle_accepts_httpstatus_enum_value(self):
         def start_response(status, headers):
             start_response.status = status

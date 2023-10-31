@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import os
 import shutil
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files import File

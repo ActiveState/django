@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.utils.lorem_ipsum import paragraphs, words
 
 
-class WebdesignTest(unittest.TestCase):
+class WebdesignTest(unittest2.TestCase):
 
     def test_words(self):
         self.assertEqual(words(7), 'lorem ipsum dolor sit amet consectetur adipisicing')

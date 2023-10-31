@@ -1,6 +1,6 @@
 import os
 import re
-import unittest
+import unittest2
 
 from django.contrib.gis.gdal import (
     GDAL_VERSION, DataSource, Envelope, GDALException, OGRGeometry,
@@ -65,7 +65,7 @@ ds_list = (
 bad_ds = (TestDS('foo'),)
 
 
-class DataSourceTest(unittest.TestCase):
+class DataSourceTest(unittest2.TestCase):
 
     def test01_valid_shp(self):
         "Testing valid SHP Data Source files."

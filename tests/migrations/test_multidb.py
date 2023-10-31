@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 
 from django.db import connection, migrations, models
 from django.db.migrations.state import ProjectState
@@ -128,12 +128,12 @@ class MultiDBOperationTests(OperationTestBase):
         else:
             self.assertEqual(Pony.objects.count(), 0)
 
-    @unittest.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
+    @unittest2.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
     @override_settings(DATABASE_ROUTERS=[MigrateNothingRouter()])
     def test_run_sql(self):
         self._test_run_sql("test_mltdb_runsql", should_run=False)
 
-    @unittest.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
+    @unittest2.skipIf(sqlparse is None and connection.features.requires_sqlparse_for_splitting, "Missing sqlparse")
     @override_settings(DATABASE_ROUTERS=[MigrateWhenFooRouter()])
     def test_run_sql2(self):
         self._test_run_sql("test_mltdb_runsql2", should_run=False)

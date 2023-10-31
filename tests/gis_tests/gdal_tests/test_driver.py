@@ -1,4 +1,4 @@
-import unittest
+import unittest2
 
 from django.contrib.gis.gdal import Driver, GDALException
 from django.test import mock
@@ -25,7 +25,7 @@ aliases = {
 }
 
 
-class DriverTest(unittest.TestCase):
+class DriverTest(unittest2.TestCase):
 
     def test01_valid_driver(self):
         "Testing valid GDAL/OGR Data Source Drivers."

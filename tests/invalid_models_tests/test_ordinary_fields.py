@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 
 from django.core.checks import Error, Warning as DjangoWarning
 from django.db import connection, models
@@ -208,7 +208,7 @@ class CharFieldTests(TestCase):
         ]
         self.assertEqual(errors, expected)
 
-    @unittest.skipUnless(connection.vendor == 'mysql',
+    @unittest2.skipUnless(connection.vendor == 'mysql',
                          "Test valid only for MySQL")
     def test_too_long_char_field_under_mysql(self):
         from django.db.backends.mysql.validation import DatabaseValidation

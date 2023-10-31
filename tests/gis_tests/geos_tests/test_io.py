@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import binascii
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.contrib.gis.geos import (
     HAS_GEOS, GEOSGeometry, Point, Polygon, WKBReader, WKBWriter, WKTReader,

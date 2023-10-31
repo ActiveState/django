@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 import os
 import socket
-import unittest
+import unittest2
 import warnings
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.conf import settings
 from django.contrib.gis.geoip import HAS_GEOIP
@@ -31,7 +31,7 @@ if HAS_GEOIP:
     "GeoIP is required along with the GEOIP_PATH setting."
 )
 @ignore_warnings(category=RemovedInDjango20Warning)
-class GeoIPTest(unittest.TestCase):
+class GeoIPTest(unittest2.TestCase):
     addr = '162.242.220.127'
     fqdn = 'www.djangoproject.com'
 

@@ -1,5 +1,5 @@
 import doctest
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.test import SimpleTestCase, TestCase as DjangoTestCase, tag
 

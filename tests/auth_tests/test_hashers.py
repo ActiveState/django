@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.conf.global_settings import PASSWORD_HASHERS
 from django.contrib.auth.hashers import (

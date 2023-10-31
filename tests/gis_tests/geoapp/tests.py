@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import re
 import tempfile
-import unittest
+import unittest2
 
 from django.contrib.gis import gdal
 from django.contrib.gis.db.models import Extent, MakeLine, Union
@@ -882,7 +882,7 @@ class GeoQuerySetTest(TestCase):
         qs = City.objects.filter(name='NotACity')
         self.assertIsNone(qs.aggregate(Union('point'))['point__union'])
 
-    @unittest.skipUnless(
+    @unittest2.skipUnless(
         connection.vendor == 'oracle',
         'Oracle supports tolerance paremeter.',
     )
@@ -908,7 +908,7 @@ class GeoQuerySetTest(TestCase):
             True,
         )
 
-    @unittest.skipUnless(
+    @unittest2.skipUnless(
         connection.vendor == 'oracle',
         'Oracle supports tolerance paremeter.',
     )

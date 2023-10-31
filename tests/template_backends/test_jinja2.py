@@ -2,7 +2,7 @@
 # silence an ImportWarning warning on Python 2.
 from __future__ import absolute_import
 
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.template import TemplateSyntaxError
 from django.test import RequestFactory

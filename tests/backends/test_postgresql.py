@@ -1,5 +1,5 @@
 import operator
-import unittest
+import unittest2
 from collections import namedtuple
 from contextlib import contextmanager
 
@@ -9,7 +9,7 @@ from django.test import TestCase
 from .models import Person
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "Test only for PostgreSQL")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "Test only for PostgreSQL")
 class ServerSideCursorsPostgres(TestCase):
     cursor_fields = 'name, statement, is_holdable, is_binary, is_scrollable, creation_time'
     PostgresCursor = namedtuple('PostgresCursor', cursor_fields)

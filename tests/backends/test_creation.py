@@ -1,5 +1,5 @@
 import copy
-import unittest
+import unittest2
 from contextlib import contextmanager
 
 from django.db import DEFAULT_DB_ALIAS, connection, connections
@@ -45,7 +45,7 @@ class TestDbSignatureTests(SimpleTestCase):
         self.assertEqual(signature[3], test_name)
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL-specific tests")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL-specific tests")
 class PostgreSQLDatabaseCreationTests(SimpleTestCase):
 
     @contextmanager

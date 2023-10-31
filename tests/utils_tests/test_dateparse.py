@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 from datetime import date, datetime, time, timedelta
 
 from django.utils.dateparse import (
@@ -9,7 +9,7 @@ from django.utils.dateparse import (
 from django.utils.timezone import get_fixed_timezone
 
 
-class DateParseTests(unittest.TestCase):
+class DateParseTests(unittest2.TestCase):
 
     def test_parse_date(self):
         # Valid inputs
@@ -67,7 +67,7 @@ class DateParseTests(unittest.TestCase):
             parse_datetime('2012-04-56T09:15:90')
 
 
-class DurationParseTests(unittest.TestCase):
+class DurationParseTests(unittest2.TestCase):
 
     def test_parse_python_format(self):
         timedeltas = [

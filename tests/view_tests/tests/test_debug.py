@@ -9,7 +9,7 @@ import os
 import re
 import sys
 import tempfile
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.conf.urls import url
 from django.core import mail

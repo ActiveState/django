@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import importlib
-import unittest
+import unittest2
 
 from django.core import management, serializers
 from django.core.serializers.base import DeserializationError
@@ -86,7 +86,7 @@ class NoYamlSerializerTestCase(SimpleTestCase):
             management.call_command('dumpdata', format='yaml')
 
 
-@unittest.skipUnless(HAS_YAML, "No yaml library detected")
+@unittest2.skipUnless(HAS_YAML, "No yaml library detected")
 class YamlSerializerTestCase(SerializersTestBase, TestCase):
     serializer_name = "yaml"
     fwd_ref_str = """- fields:
@@ -164,7 +164,7 @@ class YamlSerializerTestCase(SerializersTestBase, TestCase):
                 pass
 
 
-@unittest.skipUnless(HAS_YAML, "No yaml library detected")
+@unittest2.skipUnless(HAS_YAML, "No yaml library detected")
 class YamlSerializerTransactionTestCase(SerializersTransactionTestBase, TransactionTestCase):
     serializer_name = "yaml"
     fwd_ref_str = """- fields:

@@ -9,8 +9,7 @@ all about the internals of models in order to get the information it needs.
 import copy
 import warnings
 import re
-from collections import Counter, OrderedDict
-from collections.abc import Iterator, Mapping
+from collections import Counter, Iterator, Mapping, OrderedDict
 from itertools import chain, count, product
 from string import ascii_uppercase
 
@@ -1757,7 +1756,7 @@ class Query(object):
                 param_iter = iter([])
             for name, entry in select.items():
                 self.check_alias(name)
-                entry = str(entry)
+                entry = force_text(entry)
                 entry_params = []
                 pos = entry.find("%s")
                 while pos != -1:

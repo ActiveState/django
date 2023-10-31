@@ -5,7 +5,7 @@ import os.path
 import sys
 import tempfile
 import types
-import unittest
+import unittest2
 from contextlib import contextmanager
 
 from django.template import Context, TemplateDoesNotExist
@@ -74,7 +74,7 @@ class CachedLoaderTests(SimpleTestCase):
         self.assertIsInstance(e, TemplateDoesNotExist)
         self.assertEqual(e.args[0], 'debug-template-missing.html')
 
-    @unittest.skipIf(six.PY2, "Python 2 doesn't set extra exception attributes")
+    @unittest2.skipIf(six.PY2, "Python 2 doesn't set extra exception attributes")
     def test_cached_exception_no_traceback(self):
         """
         When a TemplateDoesNotExist instance is cached, the cached instance
@@ -162,7 +162,7 @@ class CachedLoaderTests(SimpleTestCase):
         self.assertEqual(self.engine.template_loaders[0].cache_key(lazystr('template.html'), []), 'template.html')
 
 
-@unittest.skipUnless(pkg_resources, 'setuptools is not installed')
+@unittest2.skipUnless(pkg_resources, 'setuptools is not installed')
 class EggLoaderTests(SimpleTestCase):
 
     @contextmanager
@@ -363,7 +363,7 @@ class FileSystemLoaderTests(SimpleTestCase):
             check_sources('Ångström', ['/Straße/Ångström'])
             check_sources(b'\xc3\x85ngstr\xc3\xb6m', ['/Straße/Ångström'])
 
-    @unittest.skipUnless(
+    @unittest2.skipUnless(
         os.path.normcase('/TEST') == os.path.normpath('/test'),
         "This test only runs on case-sensitive file systems.",
     )
@@ -376,7 +376,7 @@ class FileSystemLoaderTests(SimpleTestCase):
         with self.assertRaises(TemplateDoesNotExist):
             self.engine.get_template('doesnotexist.html')
 
-    @unittest.skipIf(
+    @unittest2.skipIf(
         sys.platform == 'win32',
         "Python on Windows doesn't have working os.chmod().",
     )

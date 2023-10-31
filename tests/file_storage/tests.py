@@ -8,7 +8,7 @@ import sys
 import tempfile
 import threading
 import time
-import unittest
+import unittest2
 from datetime import datetime, timedelta
 
 from django.core.cache import cache
@@ -68,7 +68,7 @@ class GetStorageClassTests(SimpleTestCase):
             get_storage_class('django.core.files.non_existing_storage.NonExistingStorage')
 
 
-class FileSystemStorageTests(unittest.TestCase):
+class FileSystemStorageTests(unittest2.TestCase):
 
     def test_deconstruction(self):
         path, args, kwargs = temp_storage.deconstruct()
@@ -781,7 +781,7 @@ class FileFieldStorageTests(TestCase):
             for o in objs:
                 o.delete()
 
-    @unittest.skipIf(
+    @unittest2.skipIf(
         sys.platform.startswith('win'),
         "Windows supports at most 260 characters in a path.",
     )
@@ -900,8 +900,8 @@ class FileSaveRaceConditionTest(SimpleTestCase):
         self.assertRegex(files[1], 'conflict_%s' % FILE_SUFFIX_REGEX)
 
 
-@unittest.skipIf(sys.platform.startswith('win'), "Windows only partially supports umasks and chmod.")
-class FileStoragePermissions(unittest.TestCase):
+@unittest2.skipIf(sys.platform.startswith('win'), "Windows only partially supports umasks and chmod.")
+class FileStoragePermissions(unittest2.TestCase):
     def setUp(self):
         self.umask = 0o027
         self.old_umask = os.umask(self.umask)
@@ -977,7 +977,7 @@ class FileStoragePathParsing(SimpleTestCase):
         self.assertRegex(files[1], '.test_%s' % FILE_SUFFIX_REGEX)
 
 
-class ContentFileStorageTestCase(unittest.TestCase):
+class ContentFileStorageTestCase(unittest2.TestCase):
 
     def setUp(self):
         self.storage_dir = tempfile.mkdtemp()

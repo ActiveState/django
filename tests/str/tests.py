@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import datetime
-from unittest import skipIf
+from unittest2 import skipIf
 
 from django.db import models
 from django.test import TestCase

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import sys
-import unittest
+import unittest2
 import warnings
 
 from django.conf import settings
@@ -65,9 +65,9 @@ class SkippingTestCase(SimpleTestCase):
             raise ValueError
 
         self._assert_skipping(test_func, ValueError)
-        self._assert_skipping(test_func2, unittest.SkipTest)
+        self._assert_skipping(test_func2, unittest2.SkipTest)
         self._assert_skipping(test_func3, ValueError)
-        self._assert_skipping(test_func4, unittest.SkipTest)
+        self._assert_skipping(test_func4, unittest2.SkipTest)
 
     def test_skip_if_db_feature(self):
         """
@@ -93,23 +93,23 @@ class SkippingTestCase(SimpleTestCase):
         def test_func5():
             raise ValueError
 
-        self._assert_skipping(test_func, unittest.SkipTest)
+        self._assert_skipping(test_func, unittest2.SkipTest)
         self._assert_skipping(test_func2, ValueError)
-        self._assert_skipping(test_func3, unittest.SkipTest)
-        self._assert_skipping(test_func4, unittest.SkipTest)
+        self._assert_skipping(test_func3, unittest2.SkipTest)
+        self._assert_skipping(test_func4, unittest2.SkipTest)
         self._assert_skipping(test_func5, ValueError)
 
 
 class SkippingClassTestCase(SimpleTestCase):
     def test_skip_class_unless_db_feature(self):
         @skipUnlessDBFeature("__class__")
-        class NotSkippedTests(unittest.TestCase):
+        class NotSkippedTests(unittest2.TestCase):
             def test_dummy(self):
                 return
 
         @skipUnlessDBFeature("missing")
         @skipIfDBFeature("__class__")
-        class SkippedTests(unittest.TestCase):
+        class SkippedTests(unittest2.TestCase):
             def test_will_be_skipped(self):
                 self.fail("We should never arrive here.")
 
@@ -117,14 +117,14 @@ class SkippingClassTestCase(SimpleTestCase):
         class SkippedTestsSubclass(SkippedTests):
             pass
 
-        test_suite = unittest.TestSuite()
+        test_suite = unittest2.TestSuite()
         test_suite.addTest(NotSkippedTests('test_dummy'))
         try:
             test_suite.addTest(SkippedTests('test_will_be_skipped'))
             test_suite.addTest(SkippedTestsSubclass('test_will_be_skipped'))
-        except unittest.SkipTest:
+        except unittest2.SkipTest:
             self.fail("SkipTest should not be raised at this stage")
-        result = unittest.TextTestRunner(stream=six.StringIO()).run(test_suite)
+        result = unittest2.TextTestRunner(stream=six.StringIO()).run(test_suite)
         self.assertEqual(result.testsRun, 3)
         self.assertEqual(len(result.skipped), 2)
         self.assertEqual(result.skipped[0][1], 'Database has feature(s) __class__')
@@ -804,7 +804,7 @@ class SkippingExtraTests(TestCase):
         with self.assertNumQueries(0):
             super(SkippingExtraTests, self).__call__(result)
 
-    @unittest.skip("Fixture loading should not be performed for skipped tests.")
+    @unittest2.skip("Fixture loading should not be performed for skipped tests.")
     def test_fixtures_are_skipped(self):
         pass
 

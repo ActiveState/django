@@ -1,4 +1,4 @@
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.db import connection
 from django.test import TestCase, mock

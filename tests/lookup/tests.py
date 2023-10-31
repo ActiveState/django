@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import collections
 from datetime import datetime
 from operator import attrgetter
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.core.exceptions import FieldError
 from django.db import connection

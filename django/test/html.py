@@ -16,11 +16,9 @@ WHITESPACE = re.compile(r'\s+')
 def normalize_whitespace(string):
     return WHITESPACE.sub(' ', string)
 
-# Python 2
-from urlparse import urlparse, parse_qsl
-from urllib import unquote_plus
-# Python 3
-# from urllib.parse import urlparse, parse_qsl, unquote_plus
+from six.moves.urllib.parse import urlparse
+from six.moves.urllib.parse import parse_qsl
+from six.moves.urllib.parse import unquote_plus
 
 # NOTE: From: https://stackoverflow.com/questions/5371992/comparing-two-urls-in-python
 class Url(object):

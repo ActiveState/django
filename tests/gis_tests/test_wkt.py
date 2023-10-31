@@ -1,4 +1,4 @@
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.contrib.gis.geos import HAS_GEOS, GEOSGeometry
 from django.contrib.gis.utils.wkt import precision_wkt

@@ -4,7 +4,7 @@ import copy
 import pickle
 import sys
 import warnings
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.utils import six
 from django.utils.functional import LazyObject, SimpleLazyObject, empty

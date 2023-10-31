@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 import warnings
 
 from django.utils import regex_helper
 
 
-class NormalizeTests(unittest.TestCase):
+class NormalizeTests(unittest2.TestCase):
     def test_empty(self):
         pattern = r""
         expected = [('', [])]

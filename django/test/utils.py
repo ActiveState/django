@@ -6,7 +6,7 @@ import time
 import warnings
 from contextlib import contextmanager
 from functools import wraps
-from unittest import TestCase, skipIf, skipUnless
+from unittest2 import TestCase, skipIf, skipUnless
 from xml.dom.minidom import Node, parseString
 
 from django.apps import apps

@@ -5,7 +5,7 @@ import json
 import random
 from binascii import a2b_hex, b2a_hex
 from io import BytesIO
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.contrib.gis import gdal
 from django.contrib.gis.geos import (

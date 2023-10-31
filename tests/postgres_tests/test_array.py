@@ -1,6 +1,6 @@
 import decimal
 import json
-import unittest
+import unittest2
 import uuid
 
 from django import forms
@@ -176,7 +176,7 @@ class TestQuerying(PostgreSQLTestCase):
             self.objs[:2]
         )
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_in_including_F_object(self):
         # This test asserts that Array objects passed to filters can be
         # constructed to contain F objects. This currently doesn't work as the
@@ -199,7 +199,7 @@ class TestQuerying(PostgreSQLTestCase):
             self.objs[:2]
         )
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_contained_by_including_F_object(self):
         # This test asserts that Array objects passed to filters can be
         # constructed to contain F objects. This currently doesn't work as the
@@ -262,7 +262,7 @@ class TestQuerying(PostgreSQLTestCase):
             [instance]
         )
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_index_used_on_nested_data(self):
         instance = NestedIntegerArrayModel.objects.create(field=[[1, 2], [3, 4]])
         self.assertSequenceEqual(
@@ -300,7 +300,7 @@ class TestQuerying(PostgreSQLTestCase):
             self.objs[2:3]
         )
 
-    @unittest.expectedFailure
+    @unittest2.expectedFailure
     def test_slice_nested(self):
         instance = NestedIntegerArrayModel.objects.create(field=[[1, 2], [3, 4]])
         self.assertSequenceEqual(
@@ -439,7 +439,7 @@ class TestChecks(PostgreSQLTestCase):
         self.assertIn('max_length', errors[0].msg)
 
 
-@unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
+@unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific tests")
 class TestMigrations(TransactionTestCase):
 
     available_apps = ['postgres_tests']

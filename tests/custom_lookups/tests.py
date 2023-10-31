@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import contextlib
 import time
-import unittest
+import unittest2
 from datetime import date, datetime
 
 from django.core.exceptions import FieldError
@@ -253,7 +253,7 @@ class LookupTests(TestCase):
             self.assertSequenceEqual(Author.objects.filter(age__div3=2), [a2])
             self.assertSequenceEqual(Author.objects.filter(age__div3=3), [])
 
-    @unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
+    @unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
     def test_birthdate_month(self):
         a1 = Author.objects.create(name='a1', birthdate=date(1981, 2, 16))
         a2 = Author.objects.create(name='a2', birthdate=date(2012, 2, 29))
@@ -377,7 +377,7 @@ class BilateralTransformTests(TestCase):
 
 @override_settings(USE_TZ=True)
 class DateTimeLookupTests(TestCase):
-    @unittest.skipUnless(connection.vendor == 'mysql', "MySQL specific SQL used")
+    @unittest2.skipUnless(connection.vendor == 'mysql', "MySQL specific SQL used")
     def test_datetime_output_field(self):
         with register_lookup(models.PositiveIntegerField, DateTimeTransform):
             ut = MySQLUnixTimestamp.objects.create(timestamp=time.time())
@@ -396,7 +396,7 @@ class YearLteTests(TestCase):
     def tearDown(self):
         models.DateField._unregister_lookup(YearTransform)
 
-    @unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
+    @unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
     def test_year_lte(self):
         baseqs = Author.objects.order_by('name')
         self.assertSequenceEqual(baseqs.filter(birthdate__testyear__lte=2012), [self.a1, self.a2, self.a3, self.a4])
@@ -407,7 +407,7 @@ class YearLteTests(TestCase):
         # The non-optimized version works, too.
         self.assertSequenceEqual(baseqs.filter(birthdate__testyear__lt=2012), [self.a1])
 
-    @unittest.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
+    @unittest2.skipUnless(connection.vendor == 'postgresql', "PostgreSQL specific SQL used")
     def test_year_lte_fexpr(self):
         self.a2.age = 2011
         self.a2.save()

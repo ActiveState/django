@@ -5,7 +5,7 @@ import os
 import shutil
 import sys
 import tempfile
-import unittest
+import unittest2
 from importlib import import_module
 
 from django import conf
@@ -277,7 +277,7 @@ class TestRestartWithReloader(SimpleTestCase):
         with mock.patch.object(sys, 'argv', ['-c', 'pass']):
             autoreload.restart_with_reloader()
 
-    @unittest.skipUnless(six.PY2 and sys.platform == 'win32', 'This is a Python 2 + Windows-specific issue.')
+    @unittest2.skipUnless(six.PY2 and sys.platform == 'win32', 'This is a Python 2 + Windows-specific issue.')
     def test_environment_decoding(self):
         """The system encoding is used for decoding."""
         os.environ['SPAM'] = 'spam'

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import unittest
+import unittest2
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from operator import attrgetter, itemgetter
@@ -303,7 +303,7 @@ class CaseExpressionTests(TestCase):
         # There is a bug in sqlite < 3.7.0, where placeholder order is lost.
         # Thus, the above query returns  <condition_value> + <result_value>
         # for each matching case instead of <result_value> + 1 (#24148).
-        test_combined_expression = unittest.expectedFailure(test_combined_expression)
+        test_combined_expression = unittest2.expectedFailure(test_combined_expression)
 
     def test_in_subquery(self):
         self.assertQuerysetEqual(
@@ -803,7 +803,7 @@ class CaseExpressionTests(TestCase):
             transform=attrgetter('integer', 'float')
         )
 
-    @unittest.skipUnless(Image, "Pillow not installed")
+    @unittest2.skipUnless(Image, "Pillow not installed")
     def test_update_image(self):
         CaseTestModel.objects.update(
             image=Case(

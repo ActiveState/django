@@ -1,7 +1,7 @@
 import imp
 import os
 import sys
-import unittest
+import unittest2
 from importlib import import_module
 from zipimport import zipimporter
 
@@ -13,7 +13,7 @@ from django.utils.module_loading import (
 )
 
 
-class DefaultLoader(unittest.TestCase):
+class DefaultLoader(unittest2.TestCase):
     def setUp(self):
         sys.meta_path.insert(0, ProxyFinder())
 
@@ -56,7 +56,7 @@ class DefaultLoader(unittest.TestCase):
             import_module('utils_tests.test_no_submodule.anything')
 
 
-class EggLoader(unittest.TestCase):
+class EggLoader(unittest2.TestCase):
     def setUp(self):
         self.egg_dir = '%s/eggs' % os.path.dirname(upath(__file__))
 

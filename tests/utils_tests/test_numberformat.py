@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from decimal import Decimal
 from sys import float_info
-from unittest import TestCase
+from unittest2 import TestCase
 
 from django.utils.numberformat import format as nformat
 

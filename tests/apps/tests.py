@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import os
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.apps import AppConfig, apps
 from django.apps.registry import Apps

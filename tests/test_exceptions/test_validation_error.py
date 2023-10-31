@@ -1,9 +1,9 @@
-import unittest
+import unittest2
 
 from django.core.exceptions import ValidationError
 
 
-class TestValidationError(unittest.TestCase):
+class TestValidationError(unittest2.TestCase):
     def test_messages_concatenates_error_dict_values(self):
         message_dict = {}
         exception = ValidationError(message_dict)

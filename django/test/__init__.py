@@ -21,7 +21,7 @@ __all__ = [
 
 # To simplify Django's test suite; not meant as a public API
 try:
-    from unittest import mock  # NOQA
+    from unittest2 import mock  # NOQA
 except ImportError:
     try:
         import mock  # NOQA

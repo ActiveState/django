@@ -1,11 +1,11 @@
 import datetime
-import unittest
+import unittest2
 
 from django.utils.dateparse import parse_duration
 from django.utils.duration import duration_iso_string, duration_string
 
 
-class TestDurationString(unittest.TestCase):
+class TestDurationString(unittest2.TestCase):
 
     def test_simple(self):
         duration = datetime.timedelta(hours=1, minutes=3, seconds=5)
@@ -24,7 +24,7 @@ class TestDurationString(unittest.TestCase):
         self.assertEqual(duration_string(duration), '-1 01:03:05')
 
 
-class TestParseDurationRoundtrip(unittest.TestCase):
+class TestParseDurationRoundtrip(unittest2.TestCase):
 
     def test_simple(self):
         duration = datetime.timedelta(hours=1, minutes=3, seconds=5)
@@ -43,7 +43,7 @@ class TestParseDurationRoundtrip(unittest.TestCase):
         self.assertEqual(parse_duration(duration_string(duration)), duration)
 
 
-class TestISODurationString(unittest.TestCase):
+class TestISODurationString(unittest2.TestCase):
 
     def test_simple(self):
         duration = datetime.timedelta(hours=1, minutes=3, seconds=5)
@@ -62,7 +62,7 @@ class TestISODurationString(unittest.TestCase):
         self.assertEqual(duration_iso_string(duration), '-P1DT01H03M05S')
 
 
-class TestParseISODurationRoundtrip(unittest.TestCase):
+class TestParseISODurationRoundtrip(unittest2.TestCase):
 
     def test_simple(self):
         duration = datetime.timedelta(hours=1, minutes=3, seconds=5)

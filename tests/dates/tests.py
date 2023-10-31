@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-from unittest import skipUnless
+from unittest2 import skipUnless
 
 from django.core.exceptions import FieldError
 from django.db import connection

@@ -12,7 +12,7 @@ import shutil
 import tempfile
 import threading
 import time
-import unittest
+import unittest2
 import warnings
 
 from django.conf import settings
@@ -1262,7 +1262,7 @@ class BaseMemcachedTests(BaseCacheTests):
             signals.request_finished.connect(close_old_connections)
 
 
-@unittest.skipUnless(MemcachedCache_params, "MemcachedCache backend not configured")
+@unittest2.skipUnless(MemcachedCache_params, "MemcachedCache backend not configured")
 @override_settings(CACHES=caches_setting_for_tests(
     base=MemcachedCache_params,
     exclude=memcached_excluded_caches,
@@ -1284,7 +1284,7 @@ class MemcachedCacheTests(BaseMemcachedTests, TestCase):
         self.assertEqual(cache._cache.server_max_value_length, 9999)
 
 
-@unittest.skipUnless(PyLibMCCache_params, "PyLibMCCache backend not configured")
+@unittest2.skipUnless(PyLibMCCache_params, "PyLibMCCache backend not configured")
 @override_settings(CACHES=caches_setting_for_tests(
     base=PyLibMCCache_params,
     exclude=memcached_excluded_caches,
@@ -1299,7 +1299,7 @@ class PyLibMCCacheTests(BaseMemcachedTests, TestCase):
     # (#19914). The `verify_keys` behavior option could be set to True (which
     # would avoid triggering the server-side bug), however this test would
     # still fail due to https://github.com/lericson/pylibmc/issues/219.
-    @unittest.skip("triggers a memcached-server bug, causing subsequent tests to fail")
+    @unittest2.skip("triggers a memcached-server bug, causing subsequent tests to fail")
     def test_invalid_key_characters(self):
         pass
 

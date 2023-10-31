@@ -23,6 +23,8 @@ from django.utils.text import get_valid_filename
 
 if django.utils.six.PY2:
     import pathlib2 as pathlib
+else:
+    import pathlib
 
 __all__ = ('Storage', 'FileSystemStorage', 'DefaultStorage', 'default_storage')
 

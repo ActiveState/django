@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import sys
-import unittest
+import unittest2
 from datetime import datetime
 
 from django.test import ignore_warnings
@@ -11,7 +11,7 @@ from django.utils.datastructures import MultiValueDict
 from django.utils.deprecation import RemovedInDjango21Warning
 
 
-class TestUtilsHttp(unittest.TestCase):
+class TestUtilsHttp(unittest2.TestCase):
 
     def test_urlencode(self):
         # 2-tuples (the norm)
@@ -211,7 +211,7 @@ class TestUtilsHttp(unittest.TestCase):
             self.assertFalse(http.is_same_domain(*pair))
 
 
-class ETagProcessingTests(unittest.TestCase):
+class ETagProcessingTests(unittest2.TestCase):
     def test_parsing(self):
         self.assertEqual(
             http.parse_etags(r'"" ,  "etag", "e\\tag", W/"weak"'),
@@ -228,7 +228,7 @@ class ETagProcessingTests(unittest.TestCase):
         self.assertEqual(http.quote_etag('W/"etag"'), 'W/"etag"')  # quoted, weak
 
 
-class HttpDateProcessingTests(unittest.TestCase):
+class HttpDateProcessingTests(unittest2.TestCase):
     def test_http_date(self):
         t = 1167616461.0
         self.assertEqual(http.http_date(t), 'Mon, 01 Jan 2007 01:54:21 GMT')
@@ -250,7 +250,7 @@ class HttpDateProcessingTests(unittest.TestCase):
         self.assertEqual(datetime.utcfromtimestamp(parsed), datetime(1994, 11, 6, 8, 49, 37))
 
 
-class EscapeLeadingSlashesTests(unittest.TestCase):
+class EscapeLeadingSlashesTests(unittest2.TestCase):
     def test(self):
         tests = (
             ('//example.com', '/%2Fexample.com'),

@@ -1,5 +1,5 @@
 import sys
-import unittest
+import unittest2
 
 from django.db import connection
 from django.test import TestCase
@@ -10,8 +10,8 @@ from django.utils.encoding import force_text
 from .models import Person
 
 
-@unittest.skipUnless(connection.vendor == 'sqlite', 'Only run on sqlite so we can check output SQL.')
-class TestDebugSQL(unittest.TestCase):
+@unittest2.skipUnless(connection.vendor == 'sqlite', 'Only run on sqlite so we can check output SQL.')
+class TestDebugSQL(unittest2.TestCase):
 
     class PassingTest(TestCase):
         def runTest(self):

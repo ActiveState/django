@@ -3,12 +3,12 @@ Distance and Area objects to allow for sensible and convenient calculation
 and conversions. Here are some tests.
 """
 
-import unittest
+import unittest2
 
 from django.contrib.gis.measure import A, Area, D, Distance
 
 
-class DistanceTest(unittest.TestCase):
+class DistanceTest(unittest2.TestCase):
     "Testing the Distance object"
 
     def testInit(self):
@@ -146,7 +146,7 @@ class DistanceTest(unittest.TestCase):
             self.assertEqual(att, D.unit_attname(nm))
 
 
-class AreaTest(unittest.TestCase):
+class AreaTest(unittest2.TestCase):
     "Testing the Area object"
 
     def testInit(self):
@@ -268,14 +268,14 @@ class AreaTest(unittest.TestCase):
 
 
 def suite():
-    s = unittest.TestSuite()
-    s.addTest(unittest.makeSuite(DistanceTest))
-    s.addTest(unittest.makeSuite(AreaTest))
+    s = unittest2.TestSuite()
+    s.addTest(unittest2.makeSuite(DistanceTest))
+    s.addTest(unittest2.makeSuite(AreaTest))
     return s
 
 
 def run(verbosity=2):
-    unittest.TextTestRunner(verbosity=verbosity).run(suite())
+    unittest2.TextTestRunner(verbosity=verbosity).run(suite())
 
 
 if __name__ == "__main__":
